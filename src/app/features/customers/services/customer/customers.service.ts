@@ -41,9 +41,11 @@ export class CustomersService {
     this.httpClient.get<Customer[]>(this.apiControllerUrl).subscribe({
       next: (response) => {
         let filteredCustomers = response;
-        if (searchCustomer.id) {
-          filteredCustomers = filteredCustomers.filter(
-            (item) => item.id == searchCustomer.id
+        if (searchCustomer.nationalityId) {
+          filteredCustomers = filteredCustomers.filter((item) =>
+            item
+              .nationalityId!.toString()
+              .includes(searchCustomer.nationalityId.toString())
           );
         }
         if (searchCustomer.customerId) {

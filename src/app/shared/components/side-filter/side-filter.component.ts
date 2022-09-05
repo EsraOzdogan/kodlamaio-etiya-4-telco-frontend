@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CustomersService } from 'src/app/features/customers/services/customer/customers.service';
 
 @Component({
@@ -22,7 +22,7 @@ export class SideFilterComponent implements OnInit {
 
   createSearchForm(): void {
     this.searchForm = this.formBuilder.group({
-      id: [''],
+      nationalityId: [''],
       customerId: [''],
       accountNumber: [''],
       gsmNumber: [''],
@@ -33,6 +33,12 @@ export class SideFilterComponent implements OnInit {
   }
 
   search() {
+    let nationalityId = parseInt(this.searchForm.value.nationalityId);
+    console.warn(typeof nationalityId);
+    const newSearchForm = {
+      ...this.searchForm.value,
+      nationalityId: nationalityId,
+    };
     this.customersService
       .getListByFilter(this.searchForm.value)
       .subscribe((data) => {

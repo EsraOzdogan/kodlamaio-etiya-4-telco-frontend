@@ -32,8 +32,12 @@
                       <th class="col-2">First Name</th>
                       <th class="col-2">Second Name</th>
                       <th class="col-2">Last Name</th>
+                      <th class="col-2">BirthDate</th>
+                      <th class="col-2">Gender</th>
+                      <th class="col-2">Mother Name</th>
+                      <th class="col-2">Father Name</th>
                       <th class="col-2">Role</th>
-                      <th class="col-2">ID Number</th>
+                      <th class="col-2">Nationality ID</th>
                     </tr>
                   </thead>
                   <tbody class="table-body">
@@ -46,13 +50,21 @@
                     ></div>
                     <ng-template #filteredListState>
                       <tr *ngFor="let customer of filteredCustomerList">
-                        <th>{{ customer.id }}</th>
+                        <th>
+                          <a (click)="getCustomerId(customer)">{{
+                            customer.id
+                          }}</a>
+                        </th>
                         <td>{{ customer.firstName }}</td>
                         <td>{{ customer.middleName }}</td>
                         <td>{{ customer.lastName }}</td>
+                        <td>{{ customer.birthDate }}</td>
+                        <td>{{ customer.gender }}</td>
+                        <td>{{ customer.motherName }}</td>
+                        <td>{{ customer.fatherName }}</td>
                         <td>{{ customer.role }}</td>
                         <!---Backend Simülasyonu, customerid gelecektir-->
-                        <td>{{ customer.id }}</td>
+                        <td>{{ customer.nationalityId }}</td>
                       </tr>
                     </ng-template>
                     <ng-template #otherState>
@@ -65,9 +77,13 @@
                         <td>{{ customer.firstName }}</td>
                         <td>{{ customer.middleName }}</td>
                         <td>{{ customer.lastName }}</td>
+                        <td>{{ customer.birthDate }}</td>
+                        <td>{{ customer.gender }}</td>
+                        <td>{{ customer.motherName }}</td>
+                        <td>{{ customer.fatherName }}</td>
                         <td>{{ customer.role }}</td>
                         <!---Backend Simülasyonu, customerid gelecektir-->
-                        <td>{{ customer.id }}</td>
+                        <td>{{ customer.nationalityId }}</td>
                       </tr>
                     </ng-template>
                   </tbody>

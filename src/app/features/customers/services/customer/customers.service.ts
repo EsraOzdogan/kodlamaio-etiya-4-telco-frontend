@@ -42,10 +42,8 @@ export class CustomersService {
       next: (response) => {
         let filteredCustomers = response;
         if (searchCustomer.nationalityId) {
-          filteredCustomers = filteredCustomers.filter((item) =>
-            item
-              .nationalityId!.toString()
-              .includes(searchCustomer.nationalityId.toString())
+          filteredCustomers = filteredCustomers.filter(
+            (item) => item.nationalityId == searchCustomer.nationalityId
           );
         }
         if (searchCustomer.customerId) {
@@ -62,9 +60,12 @@ export class CustomersService {
         }
 
         if (searchCustomer.gsmNumber) {
-          filteredCustomers = filteredCustomers.filter(
-            (item) =>
-              item.contactMedium!.mobilePhone == searchCustomer.gsmNumber
+          filteredCustomers = filteredCustomers.filter((item) =>
+            item
+              .contactMedium!.mobilePhone.substr(1, 14)
+              .split(' ')
+              .join('')
+              .includes(searchCustomer.gsmNumber)
           );
         }
 
@@ -75,11 +76,11 @@ export class CustomersService {
               .includes(searchCustomer.firstName.toLowerCase())
           );
         }
-        if (searchCustomer.lastname) {
+        if (searchCustomer.lastName) {
           filteredCustomers = filteredCustomers.filter((item) =>
             item
               .lastName!.toLowerCase()
-              .includes(searchCustomer.lastname.toLowerCase())
+              .includes(searchCustomer.lastName.toLowerCase())
           );
         }
         if (searchCustomer.orderNumber) {
@@ -225,7 +226,14 @@ export class CustomersService {
       ...customer,
       billingAccounts: [
         ...(customer.billingAccounts || []),
-        { ...billingAccount, id: (customer.billingAccounts?.length || 0) + 1 },
+        {
+          ...billingAccount,
+          id: (customer.billingAccounts?.length || 0) + 1,
+          accountNumber: Math.floor(
+            1000000000 + Math.random() * 90000000
+          ).toString(),
+          status: 'active',
+        },
       ],
     };
     console.log(newCustomer);

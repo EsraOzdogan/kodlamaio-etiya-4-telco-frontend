@@ -32,10 +32,6 @@
                       <th class="col-2">First Name</th>
                       <th class="col-2">Second Name</th>
                       <th class="col-2">Last Name</th>
-                      <th class="col-2">BirthDate</th>
-                      <th class="col-2">Gender</th>
-                      <th class="col-2">Mother Name</th>
-                      <th class="col-2">Father Name</th>
                       <th class="col-2">Role</th>
                       <th class="col-2">Nationality ID</th>
                     </tr>
@@ -51,39 +47,35 @@
                     <ng-template #filteredListState>
                       <tr *ngFor="let customer of filteredCustomerList">
                         <th>
-                          <a (click)="getCustomerId(customer)">{{
-                            customer.id
-                          }}</a>
+                          <a
+                            (click)="getCustomerId(customer)"
+                            style="cursor: pointer"
+                            >{{ customer.id }}</a
+                          >
                         </th>
                         <td>{{ customer.firstName }}</td>
                         <td>{{ customer.middleName }}</td>
                         <td>{{ customer.lastName }}</td>
-                        <td>{{ customer.birthDate }}</td>
-                        <td>{{ customer.gender }}</td>
-                        <td>{{ customer.motherName }}</td>
-                        <td>{{ customer.fatherName }}</td>
                         <td>{{ customer.role }}</td>
-                        <!---Backend Simülasyonu, customerid gelecektir-->
                         <td>{{ customer.nationalityId }}</td>
+                        <!---Backend Simülasyonu, customerid gelecektir-->
                       </tr>
                     </ng-template>
                     <ng-template #otherState>
                       <tr *ngFor="let customer of customerList">
                         <th>
-                          <a (click)="getCustomerId(customer)">{{
-                            customer.id
-                          }}</a>
+                          <a
+                            (click)="getCustomerId(customer)"
+                            style="cursor: pointer"
+                            >{{ customer.id }}</a
+                          >
                         </th>
                         <td>{{ customer.firstName }}</td>
                         <td>{{ customer.middleName }}</td>
                         <td>{{ customer.lastName }}</td>
-                        <td>{{ customer.birthDate }}</td>
-                        <td>{{ customer.gender }}</td>
-                        <td>{{ customer.motherName }}</td>
-                        <td>{{ customer.fatherName }}</td>
                         <td>{{ customer.role }}</td>
-                        <!---Backend Simülasyonu, customerid gelecektir-->
                         <td>{{ customer.nationalityId }}</td>
+                        <!---Backend Simülasyonu, customerid gelecektir-->
                       </tr>
                     </ng-template>
                   </tbody>

@@ -10,33 +10,45 @@
   <div class="e-input-container">
     <form [formGroup]="searchForm">
       <label class="e-label mt-4">Nationality ID</label>
-      <input type="text" etiyaInput="dark" formControlName="nationalityId" />
+      <input
+        type="number"
+        etiyaInput="dark"
+        formControlName="nationalityId"
+        onKeyPress="if(this.value.length==11) return false;"
+      />
 
       <label class="e-label">CUSTOMER ID</label>
-      <input type="text" etiyaInput="dark" formControlName="customerId" />
+      <input type="number" etiyaInput="dark" formControlName="customerId" />
 
       <label class="e-label">ACCOUNT NUMBER</label>
       <input type="text" etiyaInput="dark" formControlName="accountNumber" />
 
       <label class="e-label">GSM NUMBER</label>
-      <input type="text" etiyaInput="dark" formControlName="gsmNumber" />
+      <input type="number" etiyaInput="dark" formControlName="gsmNumber" />
 
       <label class="e-label">FIRST NAME</label>
       <input type="text" etiyaInput="dark" formControlName="firstName" />
 
       <label class="e-label">LAST NAME</label>
-      <input type="text" etiyaInput="dark" formControlName="lastname" />
+      <input type="text" etiyaInput="dark" formControlName="lastName" />
 
       <label class="e-label">ORDER NUMBER</label>
       <input type="text" etiyaInput="dark" formControlName="orderNumber" />
     </form>
   </div>
   <div class="e-btn-container">
-    <button type="button" etiyaButton="clear" (click)="clear()">CLEAR</button>
     <button
-      [disabled]="!searchForm.valid"
+      type="button"
+      etiyaButton="clear"
+      [disabled]="searchForm.valid"
+      (click)="clear()"
+    >
+      CLEAR
+    </button>
+    <button
       type="button"
       etiyaButton="search"
+      [disabled]="searchForm.valid"
       (click)="search()"
     >
       SEARCH<img
@@ -44,18 +56,6 @@
         src="../assets/img/search-btn-logo.png"
       />
     </button>
-    <!-- <button
-      *ngIf="searchForm.valid"
-      type="button"
-      etiyaButton="search"
-      (click)="search()"
-      class="btn-disabled"
-    >
-      SEARCH<img
-        etiyaButton="img-search"
-        src="../assets/img/search-btn-logo.png"
-      />
-    </button> -->
   </div>
 
   <div class="d-flex justify-content-center">

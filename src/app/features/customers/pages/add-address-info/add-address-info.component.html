@@ -56,14 +56,13 @@
                   </div>
                   <div class="col-12 col-lg-8 e-address-col-center">
                     <input
-                      type="number"
+                      type="text"
                       etiyaInput="dark"
                       formControlName="flatNumber"
                       [ngClass]="{
                         'invalid-input':
                           isShow && addressForm.controls['flatNumber'].errors
                       }"
-                      onkeydown="return event.keyCode !== 69 && event.keyCode !== 107 && event.keyCode !== 109 && event.keyCode !== 110 && event.keyCode !== 188 && event.keyCode !== 190 "
                     />
                   </div>
                 </div>

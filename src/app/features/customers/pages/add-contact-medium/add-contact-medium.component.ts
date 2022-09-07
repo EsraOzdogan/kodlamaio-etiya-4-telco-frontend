@@ -28,13 +28,22 @@ export class AddContactMediumComponent implements OnInit {
   }
   createFormContactMedium() {
     this.contactForm = this.formBuilder.group({
-      email: [this.customer.contactMedium?.email, Validators.required],
-      homePhone: [this.customer.contactMedium?.homePhone, Validators.required],
+      email: [
+        this.customer.contactMedium?.email,
+        [Validators.required, Validators.email],
+      ],
+      homePhone: [
+        this.customer.contactMedium?.homePhone,
+        Validators.pattern('^[0-9]{11}$'),
+      ],
       mobilePhone: [
         this.customer.contactMedium?.mobilePhone,
-        Validators.required,
+        [Validators.pattern('^[0-9]{11}$'), Validators.required],
       ],
-      fax: [this.customer.contactMedium?.fax, Validators.required],
+      fax: [
+        this.customer.contactMedium?.fax,
+        Validators.pattern('^[0-9]{11}$'),
+      ],
     });
   }
 
@@ -44,29 +53,47 @@ export class AddContactMediumComponent implements OnInit {
   }
 
   saveContactMediumToStore() {
-    this.customersService.setContactMediumInfoToStore(this.contactForm.value);
+    if (this.contactForm.value.homePhone) {
+      var homePhone = this.contactForm.value.homePhone.toString();
+    }
+    if (this.contactForm.value.mobilePhone) {
+      var mobilePhone = this.contactForm.value.mobilePhone.toString();
+    }
+    if (this.contactForm.value.fax) {
+      var fax = this.contactForm.value.fax.toString();
+    }
+
+    const newContactForm = {
+      ...this.contactForm.value,
+      homePhone: homePhone,
+      mobilePhone: mobilePhone,
+      fax: fax,
+    };
+    this.customersService.setContactMediumInfoToStore(newContactForm);
   }
 
   saveCustomer() {
-    this.saveContactMediumToStore();
-    this.customersService.add(this.customer).subscribe({
-      next: (data) => {
-        this.messageService.add({
-          detail: 'Sucsessfully added',
-          severity: 'success',
-          summary: 'Add',
-          key: 'etiya-custom',
-        });
-        this.router.navigateByUrl('/dashboard/customers/customer-dashboard');
-      },
-      error: (err) => {
-        this.messageService.add({
-          detail: 'Error created',
-          severity: 'danger',
-          summary: 'Error',
-          key: 'etiya-custom',
-        });
-      },
-    });
+    if (this.contactForm.valid) {
+      this.saveContactMediumToStore();
+      this.customersService.add(this.customer).subscribe({
+        next: (data) => {
+          this.messageService.add({
+            detail: 'Sucsessfully added',
+            severity: 'success',
+            summary: 'Add',
+            key: 'etiya-custom',
+          });
+          this.router.navigateByUrl('/dashboard/customers/customer-dashboard');
+        },
+        error: (err) => {
+          this.messageService.add({
+            detail: 'Error created',
+            severity: 'danger',
+            summary: 'Error',
+            key: 'etiya-custom',
+          });
+        },
+      });
+    }
   }
 }

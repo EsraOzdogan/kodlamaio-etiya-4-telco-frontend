@@ -43,7 +43,7 @@
                   <label class="col-5" for="homePhone">Home Phone :</label>
                   <input
                     class="col-7"
-                    type="text "
+                    type="number "
                     etiyaInput="dark"
                     formControlName="homePhone"
                   />
@@ -55,9 +55,11 @@
                   <label class="col-5" for="mobilePhone">Mobile Phone :</label>
                   <input
                     class="col-7"
-                    type="text "
+                    type="number "
                     etiyaInput="dark"
                     formControlName="mobilePhone"
+                    onKeyPress="if(this.value.length==11) return false;"
+                    onkeydown="return event.keyCode !== 69 && event.keyCode !== 107 && event.keyCode !== 109 && event.keyCode !== 110 && event.keyCode !== 188 && event.keyCode !== 190 "
                   />
                 </div>
               </div>
@@ -66,7 +68,7 @@
                   <label class="col-5" for="faxNumber">Fax :</label>
                   <input
                     class="col-7"
-                    type="text"
+                    type="number"
                     etiyaInput="dark"
                     formControlName="fax"
                   />

@@ -2565,6 +2565,52 @@
           ]
         }
       ]
+    },
+    {
+      "customerId": 9999,
+      "firstName": "ayşe",
+      "middleName": null,
+      "lastName": "a",
+      "birthDate": "2022-09-02",
+      "gender": "Female",
+      "nationalityId": 55555555555,
+      "role": "individual",
+      "motherName": null,
+      "fatherName": null,
+      "addresses": [
+        {
+          "city": {
+            "id": 6,
+            "name": "San Diego"
+          },
+          "street": "aabbfvfdv",
+          "flatNumber": 444559856,
+          "description": "888888gtnhg",
+          "id": 1
+        }
+      ],
+      "contactMedium": {
+        "email": "a@gmail.com",
+        "homePhone": "555555557",
+        "mobilePhone": "55555555555",
+        "fax": "6666666666666445000",
+        "type": "[CustomerToAdd] Set ContactMedium Info"
+      },
+      "billingAccounts": [],
+      "type": "[CustomerToAdd] Set Demographic Info",
+      "id": 21
+    },
+    {
+      "customerId": 9999,
+      "role": "individual",
+      "addresses": [],
+      "contactMedium": {
+        "email": "vdrf@gmail.com",
+        "mobilePhone": "55555577777",
+        "type": "[CustomerToAdd] Set ContactMedium Info"
+      },
+      "billingAccounts": [],
+      "id": 22
     }
   ],
   "offers": [

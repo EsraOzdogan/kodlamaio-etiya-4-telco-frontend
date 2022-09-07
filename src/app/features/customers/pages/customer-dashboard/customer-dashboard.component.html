@@ -24,6 +24,15 @@
               <app-not-found [btnText]="'CREATE CUSTOMER'"></app-not-found>
             </div>
             <ng-template #tableInfo>
+              <button
+                etiyaButton="create"
+                routerLink="/dashboard/customers/create-customer"
+              >
+                <img
+                  etiyaButton="create-logo"
+                  src="../../../../assets/img/create_btn_logo.png"
+                />Create Customer
+              </button>
               <div class="table-responsive">
                 <app-table-info class="e-table">
                   <thead>

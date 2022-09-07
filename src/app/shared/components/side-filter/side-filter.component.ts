@@ -24,7 +24,7 @@ export class SideFilterComponent implements OnInit {
 
   createSearchForm(): void {
     this.searchForm = this.formBuilder.group({
-      nationalityId: ['', Validators.pattern('[0-9]{1,10}')],
+      nationalityId: ['', Validators.pattern('[0-9]{}')],
       customerId: ['', Validators.pattern('[0-9]{}')],
       accountNumber: ['', Validators.pattern('[0-9]{}')],
       gsmNumber: ['', Validators.pattern('[0-9]{}')],
@@ -35,12 +35,12 @@ export class SideFilterComponent implements OnInit {
   }
 
   search() {
-    //let nationalityId = parseInt(this.searchForm.value.nationalityId);
+    let nationalityId = parseInt(this.searchForm.value.nationalityId);
     //console.warn(typeof nationalityId);
-    // const newSearchForm = {
-    //   ...this.searchForm.value,
-    //   nationalityId: nationalityId,
-    // };
+    const newSearchForm = {
+      ...this.searchForm.value,
+      nationalityId: nationalityId,
+    };
     // if (this.searchForm.valid)
     //   this.messageService.add({
     //     detail: 'Customer not found!...',
@@ -48,7 +48,7 @@ export class SideFilterComponent implements OnInit {
     //     summary: 'error',
     //     key: 'etiya-custom',
     //   });
-    console.warn(this.searchForm.valid);
+    console.warn(newSearchForm);
     this.customersService
       .getListByFilter(this.searchForm.value)
       .subscribe((data) => {

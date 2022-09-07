@@ -91,25 +91,32 @@ export class AddCustomerAddressComponent implements OnInit {
   }
 
   add() {
-    const addressToAdd: Address = {
-      ...this.addressForm.value,
-      city: this.cityList.find(
-        (city) => city.id == this.addressForm.value.city
-      ),
-    };
-    this.customerService.addAddress(addressToAdd, this.customer).subscribe();
+    if (this.addressForm.valid) {
+      const addressToAdd: Address = {
+        ...this.addressForm.value,
+        city: this.cityList.find(
+          (city) => city.id == this.addressForm.value.city
+        ),
+      };
+      this.customerService.addAddress(addressToAdd, this.customer).subscribe();
+    }
   }
 
   update() {
-    const addressToUpdate: Address = {
-      ...this.addressForm.value,
-      id: this.selectedAddressId,
-      city: this.cityList.find(
-        (city) => city.id == this.addressForm.value.city
-      ),
-    };
-    this.customerService
-      .updateAddress(addressToUpdate, this.customer)
-      .subscribe();
+    if (this.addressForm.valid) {
+      const addressToUpdate: Address = {
+        ...this.addressForm.value,
+        id: this.selectedAddressId,
+        city: this.cityList.find(
+          (city) => city.id == this.addressForm.value.city
+        ),
+      };
+      this.customerService
+        .updateAddress(addressToUpdate, this.customer)
+        .subscribe();
+    }
+    this.router.navigateByUrl(
+      '/dashboard/customers/customer-address/' + this.selectedCustomerId
+    );
   }
 }

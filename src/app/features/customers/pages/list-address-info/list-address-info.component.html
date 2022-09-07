@@ -30,10 +30,10 @@
                   else customerAddressList
                 "
               >
-                <th>Null</th>
-                <td>Null</td>
-                <td>Null</td>
-                <td>Null</td>
+                <th></th>
+                <td></td>
+                <td></td>
+                <td></td>
               </tr>
               <ng-template #customerAddressList>
                 <tr *ngFor="let address of customer.addresses">
@@ -65,6 +65,7 @@
         <button
           etiyaButton="clear"
           routerLink="/dashboard/customers/contact-medium"
+          [disabled]="!customer.addresses || customer.addresses.length == 0"
         >
           NEXT
         </button>

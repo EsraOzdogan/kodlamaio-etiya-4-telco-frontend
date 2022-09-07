@@ -30,8 +30,20 @@
                     type="text"
                     etiyaInput="dark"
                     formControlName="firstName"
+                    [ngClass]="{
+                      'invalid-input':
+                        isShow && profileForm.controls['firstName'].errors
+                    }"
                   />
                 </div>
+                <small
+                  *ngIf="isShow && profileForm.controls['firstName'].errors"
+                  id="lastName-help"
+                  class="p-error block ng-invalid ng-dirty"
+                  style="color: red; margin-left: 380px; margin-top: -20px"
+                >
+                  First Name cannot be blank
+                </small>
               </div>
             </div>
             <div class="col-12 col-lg-6 d=flex justify-content-start mb-5">
@@ -66,8 +78,20 @@
                     type="text"
                     etiyaInput="dark"
                     formControlName="lastName"
+                    [ngClass]="{
+                      'invalid-input':
+                        isShow && profileForm.controls['lastName'].errors
+                    }"
                   />
                 </div>
+                <small
+                  *ngIf="isShow && profileForm.controls['lastName'].errors"
+                  id="lastName-help"
+                  class="p-error block ng-invalid ng-dirty"
+                  style="color: red; margin-left: 380px; margin-top: -20px"
+                >
+                  Last Name cannot be blank
+                </small>
               </div>
             </div>
             <div class="col-12 col-lg-6 d=flex justify-content-start mb-5">
@@ -84,8 +108,20 @@
                     type="date"
                     etiyaInput="dark"
                     formControlName="birthDate"
+                    [ngClass]="{
+                      'invalid-input':
+                        isShow && profileForm.controls['birthDate'].errors
+                    }"
                   />
                 </div>
+                <small
+                  *ngIf="isShow && profileForm.controls['birthDate'].errors"
+                  id="lastName-help"
+                  class="p-error block ng-invalid ng-dirty"
+                  style="color: red; margin-left: 380px; margin-top: -20px"
+                >
+                  Please select a date
+                </small>
               </div>
             </div>
             <div class="col-12 col-lg-6 d=flex justify-content-start mb-5">
@@ -99,12 +135,29 @@
                   class="col-12 col-lg-8 d-flex justify-content-lg-start align-items-center"
                 >
                   <div class="e-dropdown">
-                    <select name="gender" id="gender" formControlName="gender">
-                      <option selected value="Female">Female</option>
+                    <select
+                      name="gender"
+                      id="gender"
+                      formControlName="gender"
+                      [ngClass]="{
+                        'invalid-input':
+                          isShow && profileForm.controls['gender'].errors
+                      }"
+                    >
+                      <option selected disabled value="">Select</option>
+                      <option value="Female">Female</option>
                       <option value="Male">Male</option>
                     </select>
                   </div>
                 </div>
+                <small
+                  *ngIf="isShow && profileForm.controls['gender'].errors"
+                  id="lastName-help"
+                  class="p-error block ng-invalid ng-dirty"
+                  style="color: red; margin-left: 380px; margin-top: 11px"
+                >
+                  Please select a gender
+                </small>
               </div>
             </div>
             <div class="col-12 col-lg-6 d=flex justify-content-start mb-5">
@@ -157,9 +210,21 @@
                     type="number"
                     etiyaInput="dark"
                     formControlName="nationalityId"
+                    [ngClass]="{
+                      'invalid-input':
+                        isShow && profileForm.controls['nationalityId'].errors
+                    }"
                     onKeyPress="if(this.value.length==11) return false;"
                   />
                 </div>
+                <small
+                  *ngIf="isShow && profileForm.controls['nationalityId'].errors"
+                  id="lastName-help"
+                  class="p-error block ng-invalid ng-dirty"
+                  style="color: red; margin-left: 380px; margin-top: -20px"
+                >
+                  Nationality Id cannot be blank
+                </small>
               </div>
             </div>
           </div>
@@ -175,17 +240,14 @@
               CANCEL
             </button>
           </div>
-          <div
-            *ngIf="!profileForm.invalid"
-            class="col-12 col-lg-5 d-flex justify-content-lg-end"
-          >
-            <button etiyaButton="clear" (click)="goNextPage()">NEXT</button>
-          </div>
-          <div
-            *ngIf="profileForm.invalid"
-            class="col-12 col-lg-5 d-flex justify-content-lg-end"
-          >
-            <button etiyaButton="clear-disabled" disabled>NEXT</button>
+          <div class="col-12 col-lg-5 d-flex justify-content-lg-end">
+            <button
+              etiyaButton="clear"
+              [disabled]="profileForm.invalid"
+              (click)="goNextPage()"
+            >
+              NEXT
+            </button>
           </div>
         </div>
       </div>

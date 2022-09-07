@@ -15,7 +15,13 @@
       <div class="d-flex justify-content-center m-8">
         <div class="e-address-form-container">
           <div class="row">
-            <a class="e-form-close" routerLink="/list-address-info">X</a>
+            <a
+              class="e-form-close"
+              [routerLink]="
+                '/dashboard/customers/customer-address/' + selectedCustomerId
+              "
+              >X</a
+            >
           </div>
           <form *ngIf="addressForm" [formGroup]="addressForm">
             <div class="row">
@@ -94,7 +100,13 @@
             </div>
             <div class="row mt-2 d-flex justify-content-center">
               <div class="col-2">
-                <button etiyaButton="clear" (click)="save()">SAVE</button>
+                <button
+                  etiyaButton="clear"
+                  [disabled]="this.addressForm.invalid"
+                  (click)="save()"
+                >
+                  SAVE
+                </button>
               </div>
             </div>
           </form>

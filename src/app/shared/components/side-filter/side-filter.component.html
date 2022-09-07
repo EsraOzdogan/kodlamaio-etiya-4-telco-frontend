@@ -15,16 +15,33 @@
         etiyaInput="dark"
         formControlName="nationalityId"
         onKeyPress="if(this.value.length==11) return false;"
+        onkeydown="return event.keyCode !== 69 && event.keyCode !== 107 && event.keyCode !== 109 && event.keyCode !== 110 && event.keyCode !== 188 && event.keyCode !== 190 "
       />
 
       <label class="e-label">CUSTOMER ID</label>
-      <input type="number" etiyaInput="dark" formControlName="customerId" />
+      <input
+        type="number"
+        etiyaInput="dark"
+        formControlName="customerId"
+        onkeydown="return event.keyCode !== 69 && event.keyCode !== 107 && event.keyCode !== 109 && event.keyCode !== 110 && event.keyCode !== 188 && event.keyCode !== 190 "
+      />
 
       <label class="e-label">ACCOUNT NUMBER</label>
-      <input type="text" etiyaInput="dark" formControlName="accountNumber" />
+      <input
+        type="number"
+        etiyaInput="dark"
+        formControlName="accountNumber"
+        onkeydown="return event.keyCode !== 69 && event.keyCode !== 107 && event.keyCode !== 109 && event.keyCode !== 110 && event.keyCode !== 188 && event.keyCode !== 190 "
+      />
 
       <label class="e-label">GSM NUMBER</label>
-      <input type="number" etiyaInput="dark" formControlName="gsmNumber" />
+      <input
+        type="number"
+        etiyaInput="dark"
+        formControlName="gsmNumber"
+        onKeyPress="if(this.value.length==11) return false;"
+        onkeydown="return event.keyCode !== 69 && event.keyCode !== 107 && event.keyCode !== 109 && event.keyCode !== 110 && event.keyCode !== 188 && event.keyCode !== 190 "
+      />
 
       <label class="e-label">FIRST NAME</label>
       <input type="text" etiyaInput="dark" formControlName="firstName" />
@@ -33,7 +50,12 @@
       <input type="text" etiyaInput="dark" formControlName="lastName" />
 
       <label class="e-label">ORDER NUMBER</label>
-      <input type="text" etiyaInput="dark" formControlName="orderNumber" />
+      <input
+        type="number"
+        etiyaInput="dark"
+        formControlName="orderNumber"
+        onkeydown="return event.keyCode !== 69 && event.keyCode !== 107 && event.keyCode !== 109 && event.keyCode !== 110 && event.keyCode !== 188 && event.keyCode !== 190 "
+      />
     </form>
   </div>
   <div class="e-btn-container">
@@ -55,18 +77,6 @@
         etiyaButton="img-search"
         src="../assets/img/search-btn-logo.png"
       />
-    </button>
-  </div>
-
-  <div class="d-flex justify-content-center">
-    <button
-      etiyaButton="create"
-      routerLink="/dashboard/customers/create-customer"
-    >
-      <img
-        etiyaButton="create-logo"
-        src="../../../../assets/img/create_btn_logo.png"
-      />Create Customer
     </button>
   </div>
 </div>

@@ -18,7 +18,7 @@ export class CustomerDashboardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getCustomersList();
+    //this.getCustomersList();
   }
 
   getCustomersList() {

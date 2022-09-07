@@ -39,7 +39,10 @@
                         <option selected disabled hidden value="">
                           Choose a city
                         </option>
-                        <option *ngFor="let city of cityList" [ngValue]="city">
+                        <option
+                          *ngFor="let city of cityList"
+                          [ngValue]="city.id"
+                        >
                           {{ city.name }}
                         </option>
                       </select>
@@ -127,7 +130,7 @@
                 <button
                   etiyaButton="clear"
                   [disabled]="this.addressForm.invalid"
-                  (click)="addAddress()"
+                  (click)="save()"
                 >
                   SAVE
                 </button>

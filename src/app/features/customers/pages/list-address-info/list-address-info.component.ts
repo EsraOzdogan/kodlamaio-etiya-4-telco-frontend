@@ -1,6 +1,9 @@
+import { MessageService } from 'primeng/api';
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Customer } from '../../models/customer';
 import { CustomersService } from '../../services/customer/customers.service';
+import { Address } from '../../models/address';
 
 @Component({
   selector: 'app-list-address-info',
@@ -9,11 +12,43 @@ import { CustomersService } from '../../services/customer/customers.service';
 })
 export class ListAddressInfoComponent implements OnInit {
   customer!: Customer;
-  constructor(private customersService: CustomersService) {}
+  addressToDelete!: Address;
+  constructor(
+    private customersService: CustomersService,
+    private router: Router,
+    private messageService: MessageService
+  ) {}
 
   ngOnInit(): void {
     this.customersService.customerToAddModel$.subscribe((state) => {
       this.customer = state;
     });
+    this.messageService.clearObserver.subscribe((data) => {
+      if (data == 'r') {
+        this.messageService.clear();
+      } else if (data == 'c') {
+        this.remove();
+      }
+    });
+  }
+  selectAddressId(id: number) {
+    let address = this.customer.addresses?.find((c) => c.id == id);
+    this.router.navigateByUrl(`update-address-info/${address?.id}`);
+  }
+  removePopup(address: Address) {
+    if (this.customer.addresses && this.customer.addresses?.length <= 1) {
+      alert('1 adres varsa silemezsin.');
+      return;
+    }
+    this.addressToDelete = address;
+    this.messageService.add({
+      key: 'c',
+      sticky: true,
+      severity: 'warn',
+      detail: 'Your changes could not be saved. Are you sure?',
+    });
+  }
+  remove() {
+    this.customersService.removeAdress(this.addressToDelete);
   }
 }

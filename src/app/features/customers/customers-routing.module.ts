@@ -58,6 +58,8 @@ const routes: Routes = [
     path: ':id/address/update/:addressId',
     component: AddCustomerAddressComponent,
   },
+
+  { path: 'update-address-info/:id', component: AddAddressInfoComponent },
 ];
 
 @NgModule({

@@ -1298,7 +1298,8 @@
           },
           "street": "Mesta",
           "flatNumber": 17,
-          "description": "8 Old Shore Trail"
+          "description": "8 Old Shore Trail",
+          "isMain": false
         },
         {
           "id": 2,
@@ -1308,7 +1309,8 @@
           },
           "street": "Bartelt",
           "flatNumber": 15,
-          "description": "78 International Junction"
+          "description": "78 International Junction",
+          "isMain": true
         }
       ],
       "contactMedium": {

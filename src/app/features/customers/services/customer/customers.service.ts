@@ -172,24 +172,10 @@ export class CustomersService {
     return this.httpClient.delete<Customer>(`${this.apiControllerUrl}/${id}`);
   }
 
-  update(
-    customerDemographicInfo: any,
-    customer: Customer
-  ): Observable<Customer> {
-    const newCustomer: Customer = {
-      ...customer,
-      firstName: customerDemographicInfo.firstName,
-      middleName: customerDemographicInfo.middleName,
-      lastName: customerDemographicInfo.lastName,
-      birthDate: customerDemographicInfo.birthDate,
-      gender: customerDemographicInfo.gender,
-      nationalityId: customerDemographicInfo.nationalityId,
-      motherName: customerDemographicInfo.motherName,
-      fatherName: customerDemographicInfo.fatherName,
-    };
+  update(customer: Customer): Observable<Customer> {
     return this.httpClient.put<Customer>(
       `${this.apiControllerUrl}/${customer.id}`,
-      newCustomer
+      customer
     );
   }
 
@@ -268,29 +254,24 @@ export class CustomersService {
     return this.httpClient.delete<Customer>(`${this.apiControllerUrl}/${id}`);
   }
 
-  // getListByAccountNumber(searchAccount: string, billigAcc: BillingAccount): Observable<BillingAccount[]> {
-  //   const subject = new Subject<BillingAccount[]>();
-  //   this.httpClient.get<Customer[]>(this.apiControllerUrl).subscribe({
-  //     next: (response) => {
-  //       let filteredCustomers = response;
-  //       if (searchCustomer.nationalityId) {
-  //         filteredCustomers = filteredCustomers.filter((item) =>
-  //           item.nationalityId
-  //             ?.toString()
-  //             .includes(searchCustomer.nationalityId.toString())
-  //         );
-  //       }
-
-  //       subject.next(filteredCustomers);
-  //     },
-  //     error: (err) => {
-  //       subject.error(err);
-  //     },
-  //     complete: () => {
-  //       //en son calısan yer
-  //       subject.complete();
-  //     },
-  //   });
-  //   return subject.asObservable();
-  // }
+  updateDemographicInfo(
+    customerDemographicInfo: any,
+    customer: Customer
+  ): Observable<Customer> {
+    const newCustomer: Customer = {
+      ...customer,
+      firstName: customerDemographicInfo.firstName,
+      middleName: customerDemographicInfo.middleName,
+      lastName: customerDemographicInfo.lastName,
+      birthDate: customerDemographicInfo.birthDate,
+      gender: customerDemographicInfo.gender,
+      nationalityId: customerDemographicInfo.nationalityId,
+      motherName: customerDemographicInfo.motherName,
+      fatherName: customerDemographicInfo.fatherName,
+    };
+    return this.httpClient.put<Customer>(
+      `${this.apiControllerUrl}/${customer.id}`,
+      newCustomer
+    );
+  }
 }

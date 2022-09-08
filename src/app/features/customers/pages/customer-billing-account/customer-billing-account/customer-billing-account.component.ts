@@ -114,7 +114,6 @@ export class CustomerBillingAccountComponent implements OnInit {
     this.customerService
       .getCustomerById(this.selectedCustomerId)
       .subscribe((data) => {
-        console.warn(data);
         data.addresses?.forEach((adr) => {
           if (adr.isMain == true) this.addresses = adr;
         });

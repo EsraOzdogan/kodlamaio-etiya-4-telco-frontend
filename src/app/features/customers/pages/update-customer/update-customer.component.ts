@@ -73,18 +73,20 @@ export class UpdateCustomerComponent implements OnInit {
       { id: this.customer.id },
       this.updateCustomerForm.value
     );
-    this.customerService.update(customer, this.customer).subscribe(() => {
-      setTimeout(() => {
-        this.router.navigateByUrl(
-          `/dashboard/customers/customer-address/${customer.id}`
-        );
-        this.messageService.add({
-          detail: 'Sucsessfully updated',
-          severity: 'success',
-          summary: 'Update',
-          key: 'etiya-custom',
-        });
-      }, 1000);
-    });
+    this.customerService
+      .updateDemographicInfo(customer, this.customer)
+      .subscribe(() => {
+        setTimeout(() => {
+          this.router.navigateByUrl(
+            `/dashboard/customers/customer-address/${customer.id}`
+          );
+          this.messageService.add({
+            detail: 'Sucsessfully updated',
+            severity: 'success',
+            summary: 'Update',
+            key: 'etiya-custom',
+          });
+        }, 1000);
+      });
   }
 }

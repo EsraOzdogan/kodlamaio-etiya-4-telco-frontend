@@ -1,3 +1,4 @@
+import { Customer } from './../../models/customer';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Address } from '../../models/address';
@@ -11,6 +12,7 @@ export class CustomerAddressComponent implements OnInit {
   selectedCustomerId!: number;
   customerAddress: Address[] = [];
   isChecked!: boolean;
+  customer!: Customer;
   constructor(
     private activatedRoute: ActivatedRoute,
     private customerService: CustomersService,
@@ -31,6 +33,7 @@ export class CustomerAddressComponent implements OnInit {
       this.customerService
         .getCustomerById(this.selectedCustomerId)
         .subscribe((data) => {
+          this.customer = data;
           data.addresses?.forEach((adress) => {
             this.customerAddress.push(adress);
           });
@@ -58,22 +61,19 @@ export class CustomerAddressComponent implements OnInit {
         location.reload();
       }, 5000);
     });
-
-    // this.carService.deleteCar(carId).subscribe(data=>{
-    //   this.toastrService.success(data.description, " silindi")
-    //   setTimeout(()=> {
-    //     location.reload();
-    //   },5000)
-    // })
   }
 
   handleConfigInput(event: any) {
-    console.warn(event.isTrusted);
-    this.customerAddress.forEach((adr) => {
-      if (adr.id == event.target.value) adr.isMain = true;
-      else {
-        adr.isMain = false;
-      }
+    this.customer.addresses = this.customer.addresses?.map((adr) => {
+      const newAddress = { ...adr, isMain: false };
+      return newAddress;
+    });
+    let findAddress = this.customer.addresses?.find((adr) => {
+      return adr.id == event.target.value;
+    });
+    findAddress!.isMain = true;
+    this.customerService.update(this.customer).subscribe((data) => {
+      console.log(data);
     });
   }
 }

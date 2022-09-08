@@ -54,12 +54,15 @@ export class ListAddressInfoComponent implements OnInit {
   }
   handleConfigInput(event: any) {
     console.warn(event.isTrusted);
-    this.customer.addresses?.forEach((adr) => {
-      if (adr.id == event.target.value) adr.isMain = true;
-      else {
-        adr.isMain = false;
-      }
+    this.customer.addresses = this.customer.addresses?.map((adr) => {
+      const newAddress = { ...adr, isMain: false };
+      return newAddress;
     });
-    console.warn(this.customer.addresses);
+    let findAddress = this.customer.addresses?.find((adr) => {
+      return adr.id == event.target.value;
+    }) as Address;
+    findAddress!.isMain = true;
+
+    this.customersService.updateAddressInfoToStore(findAddress);
   }
 }

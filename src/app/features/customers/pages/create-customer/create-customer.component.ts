@@ -55,26 +55,28 @@ export class CreateCustomerComponent implements OnInit {
   }
   getCustomers(id: number) {
     this.customerService.getList().subscribe((response) => {
-      response.filter((item) => {
-        if (item.nationalityId === id) {
-          this.messageService.add({
-            detail: 'Please contact your system administrator',
-            severity: 'info',
-            summary: 'Forgot password?',
-            key: 'etiya-custom',
-            sticky: true,
-          });
-          this.router.navigateByUrl('/dashboard/customers/create-customer');
-        }
+      let matchCustomer = response.find((item) => {
+        return item.nationalityId == id;
       });
+      if (matchCustomer) {
+        this.messageService.add({
+          detail: 'This user already exist',
+          severity: 'info',
+          summary: 'Warning',
+          key: 'etiya-custom',
+          sticky: true,
+        });
+      } else {
+        this.customerService.setDemographicInfoToStore(this.profileForm.value);
+        this.router.navigateByUrl('/dashboard/customers/list-address-info');
+      }
     });
   }
 
   goNextPage() {
     if (this.profileForm.valid) {
       this.isShow = false;
-      this.customerService.setDemographicInfoToStore(this.profileForm.value);
-      this.router.navigateByUrl('/dashboard/customers/list-address-info');
+      this.getCustomers(this.profileForm.value.nationalityId);
     } else {
       this.isShow = true;
     }

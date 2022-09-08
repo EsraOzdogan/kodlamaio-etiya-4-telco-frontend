@@ -82,6 +82,10 @@
                   </tr>
                   <ng-template #customerAddressList>
                     <tr *ngFor="let billingadr of billingAdress">
+                      <td>{{ addresses.street }}</td>
+                      <td>{{ addresses.flatNumber }}</td>
+                      <td>{{ addresses.description }}</td>
+
                       <th style="display: flex">
                         <!-- <div>
                           <button etiyaButton="edit"></button>

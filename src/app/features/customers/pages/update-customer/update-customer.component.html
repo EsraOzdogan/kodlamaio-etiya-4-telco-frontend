@@ -86,8 +86,8 @@
                       class="p-2"
                       formControlName="gender"
                     >
-                      <option selected value="Female">Female</option>
-                      <option value="Erkek">Erkek</option>
+                      <option value="Female">Female</option>
+                      <option value="Male">Male</option>
                     </select>
                   </div>
                 </div>
@@ -140,7 +140,13 @@
                 </button>
               </div>
               <div class="col-6 d-flex justify-content-lg-end">
-                <button etiyaButton="clear" (click)="update()">SAVE</button>
+                <button
+                  etiyaButton="clear"
+                  [disabled]="updateCustomerForm.invalid"
+                  (click)="update()"
+                >
+                  SAVE
+                </button>
               </div>
             </div>
           </div>

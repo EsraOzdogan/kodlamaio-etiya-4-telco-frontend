@@ -13,3 +13,17 @@
   border: 1px solid #f58220 !important;
   margin-top: 10px;
 }
+.e-acc-label{
+  font-family: 'Anybody';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 21px;
+  color: #ffffff;
+  margin-bottom: 5px;
+}
+::ng-deep .e-btn-clear {
+  margin-bottom: 20px;
+  margin-left: 10px;
+}
+

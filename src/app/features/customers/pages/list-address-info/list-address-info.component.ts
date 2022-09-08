@@ -13,6 +13,7 @@ import { Address } from '../../models/address';
 export class ListAddressInfoComponent implements OnInit {
   customer!: Customer;
   addressToDelete!: Address;
+  displayBasic!: boolean;
   constructor(
     private customersService: CustomersService,
     private router: Router,
@@ -37,7 +38,7 @@ export class ListAddressInfoComponent implements OnInit {
   }
   removePopup(address: Address) {
     if (this.customer.addresses && this.customer.addresses?.length <= 1) {
-      alert('1 adres varsa silemezsin.');
+      this.displayBasic = true;
       return;
     }
     this.addressToDelete = address;
@@ -45,10 +46,20 @@ export class ListAddressInfoComponent implements OnInit {
       key: 'c',
       sticky: true,
       severity: 'warn',
-      detail: 'Your changes could not be saved. Are you sure?',
+      detail: 'Are you sure to delete this address?',
     });
   }
   remove() {
     this.customersService.removeAdress(this.addressToDelete);
+  }
+  handleConfigInput(event: any) {
+    console.warn(event.isTrusted);
+    this.customer.addresses?.forEach((adr) => {
+      if (adr.id == event.target.value) adr.isMain = true;
+      else {
+        adr.isMain = false;
+      }
+    });
+    console.warn(this.customer.addresses);
   }
 }

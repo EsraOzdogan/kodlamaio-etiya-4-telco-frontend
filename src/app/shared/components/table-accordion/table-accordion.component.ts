@@ -13,5 +13,7 @@ export class TableAccordionComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.warn(this.billingAccount);
+  }
 }

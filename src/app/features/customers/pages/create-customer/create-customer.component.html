@@ -215,6 +215,7 @@
                         isShow && profileForm.controls['nationalityId'].errors
                     }"
                     onKeyPress="if(this.value.length==11) return false;"
+                    (keypress)="isValid($event)"
                   />
                 </div>
                 <small

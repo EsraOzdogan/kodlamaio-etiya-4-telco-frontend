@@ -263,4 +263,34 @@ export class CustomersService {
       newCustomer
     );
   }
+
+  deleteAddress(id: number): Observable<Customer> {
+    return this.httpClient.delete<Customer>(`${this.apiControllerUrl}/${id}`);
+  }
+
+  // getListByAccountNumber(searchAccount: string, billigAcc: BillingAccount): Observable<BillingAccount[]> {
+  //   const subject = new Subject<BillingAccount[]>();
+  //   this.httpClient.get<Customer[]>(this.apiControllerUrl).subscribe({
+  //     next: (response) => {
+  //       let filteredCustomers = response;
+  //       if (searchCustomer.nationalityId) {
+  //         filteredCustomers = filteredCustomers.filter((item) =>
+  //           item.nationalityId
+  //             ?.toString()
+  //             .includes(searchCustomer.nationalityId.toString())
+  //         );
+  //       }
+
+  //       subject.next(filteredCustomers);
+  //     },
+  //     error: (err) => {
+  //       subject.error(err);
+  //     },
+  //     complete: () => {
+  //       //en son calısan yer
+  //       subject.complete();
+  //     },
+  //   });
+  //   return subject.asObservable();
+  // }
 }

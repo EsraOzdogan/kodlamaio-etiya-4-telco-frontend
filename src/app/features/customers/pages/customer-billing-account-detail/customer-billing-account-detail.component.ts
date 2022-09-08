@@ -1,5 +1,6 @@
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Product } from './../../models/product';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BillingAccount } from '../../models/billingAccount';
 import { CustomersService } from '../../services/customer/customers.service';
@@ -11,13 +12,22 @@ import { CustomersService } from '../../services/customer/customers.service';
 export class CustomerBillingAccountDetailComponent implements OnInit {
   selectedCustomerId!: number;
   billingAccountList!: BillingAccount[];
+  searchForm!: FormGroup;
+  filteredData!: BillingAccount[];
   constructor(
     private customerService: CustomersService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private formBuilder: FormBuilder
   ) {}
 
   ngOnInit(): void {
     this.getCustomerById();
+    this.createAccForm();
+  }
+  createAccForm(): void {
+    this.searchForm = this.formBuilder.group({
+      accountNumber: [''],
+    });
   }
   getCustomerById() {
     this.activatedRoute.params.subscribe((params) => {
@@ -32,5 +42,11 @@ export class CustomerBillingAccountDetailComponent implements OnInit {
           this.billingAccountList = data.billingAccounts || [];
         });
     }
+  }
+  searchAccount() {
+    this.filteredData = this.billingAccountList.filter(
+      (item) => item.accountNumber == this.searchForm.value.accountNumber
+    );
+    console.log(this.filteredData);
   }
 }

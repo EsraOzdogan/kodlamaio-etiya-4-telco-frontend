@@ -20,8 +20,8 @@ export class CustomerBillingAccountComponent implements OnInit {
   selectedCustomerId!: number;
   customer!: Customer;
   billingAccount!: BillingAccount;
-
   billingAdress: Address[] = [];
+  addresses!: Address;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -34,6 +34,7 @@ export class CustomerBillingAccountComponent implements OnInit {
   ngOnInit(): void {
     this.getParams();
     this.getCityList();
+    this.getMainAddress();
   }
 
   getParams() {
@@ -104,5 +105,19 @@ export class CustomerBillingAccountComponent implements OnInit {
     this.customerService
       .addBillingAccount(this.billingAccount, this.customer)
       .subscribe();
+    this.router.navigateByUrl(
+      '/dashboard/customers/customer-billing-account-detail/' +
+        this.selectedCustomerId
+    );
+  }
+  getMainAddress() {
+    this.customerService
+      .getCustomerById(this.selectedCustomerId)
+      .subscribe((data) => {
+        console.warn(data);
+        data.addresses?.forEach((adr) => {
+          if (adr.isMain == true) this.addresses = adr;
+        });
+      });
   }
 }

@@ -10,7 +10,7 @@ import { CustomersService } from '../../services/customer/customers.service';
 export class CustomerAddressComponent implements OnInit {
   selectedCustomerId!: number;
   customerAddress: Address[] = [];
-
+  isChecked!: boolean;
   constructor(
     private activatedRoute: ActivatedRoute,
     private customerService: CustomersService,
@@ -48,5 +48,32 @@ export class CustomerAddressComponent implements OnInit {
     this.router.navigateByUrl(
       `/dashboard/customers/${this.selectedCustomerId}/address/update/${addressId}`
     );
+  }
+  removeAddress(adr: Address) {
+    this.customerService.deleteAddress(this.selectedCustomerId);
+
+    this.customerService.delete(adr.id).subscribe((data) => {
+      //this.toastrService.success(data.description, " silindi")
+      setTimeout(() => {
+        location.reload();
+      }, 5000);
+    });
+
+    // this.carService.deleteCar(carId).subscribe(data=>{
+    //   this.toastrService.success(data.description, " silindi")
+    //   setTimeout(()=> {
+    //     location.reload();
+    //   },5000)
+    // })
+  }
+
+  handleConfigInput(event: any) {
+    console.warn(event.isTrusted);
+    this.customerAddress.forEach((adr) => {
+      if (adr.id == event.target.value) adr.isMain = true;
+      else {
+        adr.isMain = false;
+      }
+    });
   }
 }

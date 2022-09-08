@@ -75,10 +75,10 @@
                       else customerAddressList
                     "
                   >
-                    <th>Null</th>
-                    <td>Null</td>
-                    <td>Null</td>
-                    <td>Null</td>
+                    <th>{{ addresses.city.name }}</th>
+                    <td>{{ addresses.street }}</td>
+                    <td>{{ addresses.flatNumber }}</td>
+                    <td>{{ addresses.description }}</td>
                   </tr>
                   <ng-template #customerAddressList>
                     <tr *ngFor="let billingadr of billingAdress">
@@ -110,7 +110,13 @@
               <button etiyaButton="clear" routerLink="recipes">CANCEL</button>
             </div>
             <div class="col-12 col-lg-5 d-flex justify-content-lg-end">
-              <button etiyaButton="clear" (click)="add()">Create</button>
+              <button
+                etiyaButton="clear"
+                [disabled]="accountForm.invalid"
+                (click)="add()"
+              >
+                Create
+              </button>
             </div>
           </div>
         </div>
@@ -193,7 +199,13 @@
           </div>
           <div class="row mt-2 d-flex justify-content-center">
             <div class="col-2">
-              <button etiyaButton="clear" (click)="addAddress()">SAVE</button>
+              <button
+                etiyaButton="clear"
+                [disabled]="addressForm.invalid"
+                (click)="addAddress()"
+              >
+                SAVE
+              </button>
             </div>
           </div>
         </form>

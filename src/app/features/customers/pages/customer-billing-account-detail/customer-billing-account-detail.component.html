@@ -28,8 +28,40 @@
   <div class="p-2"></div>
   <div class="e-customer-content">
     <div class="m-3">
+      <form [formGroup]="searchForm">
+        <div class="row">
+          <label class="e-acc-label" for="accountNumber">Account Number</label>
+        </div>
+        <div class="row">
+          <div class="d-flex justify-content-lg-start align-items-center">
+            <input
+              type="text"
+              etiyaInput="dark"
+              id="accountNumber"
+              formControlName="accountNumber"
+            />
+
+            <button etiyaButton="clear" (click)="searchAccount()">
+              Search
+            </button>
+          </div>
+        </div>
+      </form>
+
       <app-table-accordion-header></app-table-accordion-header>
-      <ng-template ngFor let-bill [ngForOf]="billingAccountList">
+      <ng-template *ngIf="filteredData" ngFor let-bill [ngForOf]="filteredData">
+        <app-table-accordion
+          [billingAccount]="bill"
+          [customerId]="selectedCustomerId"
+        ></app-table-accordion>
+      </ng-template>
+
+      <ng-template
+        *ngIf="!filteredData"
+        ngFor
+        let-bill
+        [ngForOf]="billingAccountList"
+      >
         <app-table-accordion
           [billingAccount]="bill"
           [customerId]="selectedCustomerId"

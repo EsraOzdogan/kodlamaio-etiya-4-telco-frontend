@@ -58,4 +58,13 @@ export class SideFilterComponent implements OnInit {
   clear() {
     this.createSearchForm();
   }
+  isValid(event: any): boolean {
+    console.log(event);
+    const pattern = /[0-9]/;
+    const char = String.fromCharCode(event.which ? event.which : event.keyCode);
+    if (pattern.test(char)) return true;
+
+    event.preventDefault();
+    return false;
+  }
 }

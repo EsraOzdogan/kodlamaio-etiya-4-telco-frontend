@@ -73,8 +73,25 @@ export class UpdateCustContactMediumComponent implements OnInit {
       });
       return;
     }
+    if (this.updateCustomerContactForm.value.homePhone) {
+      var homePhone = this.updateCustomerContactForm.value.homePhone.toString();
+    }
+    if (this.updateCustomerContactForm.value.mobilePhone) {
+      var mobilePhone =
+        this.updateCustomerContactForm.value.mobilePhone.toString();
+    }
+    if (this.updateCustomerContactForm.value.fax) {
+      var fax = this.updateCustomerContactForm.value.fax.toString();
+    }
+
+    const newContactForm = {
+      ...this.updateCustomerContactForm.value,
+      homePhone: homePhone,
+      mobilePhone: mobilePhone,
+      fax: fax,
+    };
     this.customersService
-      .updateContactMedium(this.updateCustomerContactForm.value, this.customer)
+      .updateContactMedium(newContactForm, this.customer)
       .subscribe(() => {
         this.router.navigateByUrl(
           `/dashboard/customers/customer-contact-medium/${this.customer.id}`
@@ -86,5 +103,14 @@ export class UpdateCustContactMediumComponent implements OnInit {
           key: 'etiya-custom',
         });
       });
+  }
+  isValid(event: any): boolean {
+    console.log(event);
+    const pattern = /[0-9]/;
+    const char = String.fromCharCode(event.which ? event.which : event.keyCode);
+    if (pattern.test(char)) return true;
+
+    event.preventDefault();
+    return false;
   }
 }

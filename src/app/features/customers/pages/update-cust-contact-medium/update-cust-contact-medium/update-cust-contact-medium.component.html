@@ -46,6 +46,8 @@
                     type="number "
                     etiyaInput="dark"
                     formControlName="homePhone"
+                    onKeyPress="if(this.value.length==11) return false;"
+                    (keypress)="isValid($event)"
                   />
                 </div>
               </div>
@@ -59,7 +61,7 @@
                     etiyaInput="dark"
                     formControlName="mobilePhone"
                     onKeyPress="if(this.value.length==11) return false;"
-                    onkeydown="return event.keyCode !== 69 && event.keyCode !== 107 && event.keyCode !== 109 && event.keyCode !== 110 && event.keyCode !== 188 && event.keyCode !== 190 "
+                    (keypress)="isValid($event)"
                   />
                 </div>
               </div>
@@ -71,6 +73,8 @@
                     type="number"
                     etiyaInput="dark"
                     formControlName="fax"
+                    onKeyPress="if(this.value.length==11) return false;"
+                    (keypress)="isValid($event)"
                   />
                 </div>
               </div>

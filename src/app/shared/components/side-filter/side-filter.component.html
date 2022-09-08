@@ -15,7 +15,7 @@
         etiyaInput="dark"
         formControlName="nationalityId"
         onKeyPress="if(this.value.length==11) return false;"
-        onkeydown="return event.keyCode !== 69 && event.keyCode !== 107 && event.keyCode !== 109 && event.keyCode !== 110 && event.keyCode !== 188 && event.keyCode !== 190 "
+        (keypress)="isValid($event)"
       />
 
       <label class="e-label">CUSTOMER ID</label>
@@ -23,7 +23,7 @@
         type="number"
         etiyaInput="dark"
         formControlName="customerId"
-        onkeydown="return event.keyCode !== 69 && event.keyCode !== 107 && event.keyCode !== 109 && event.keyCode !== 110 && event.keyCode !== 188 && event.keyCode !== 190 "
+        (keypress)="isValid($event)"
       />
 
       <label class="e-label">ACCOUNT NUMBER</label>
@@ -31,7 +31,7 @@
         type="number"
         etiyaInput="dark"
         formControlName="accountNumber"
-        onkeydown="return event.keyCode !== 69 && event.keyCode !== 107 && event.keyCode !== 109 && event.keyCode !== 110 && event.keyCode !== 188 && event.keyCode !== 190 "
+        (keypress)="isValid($event)"
       />
 
       <label class="e-label">GSM NUMBER</label>
@@ -40,7 +40,7 @@
         etiyaInput="dark"
         formControlName="gsmNumber"
         onKeyPress="if(this.value.length==11) return false;"
-        onkeydown="return event.keyCode !== 69 && event.keyCode !== 107 && event.keyCode !== 109 && event.keyCode !== 110 && event.keyCode !== 188 && event.keyCode !== 190 "
+        (keypress)="isValid($event)"
       />
 
       <label class="e-label">FIRST NAME</label>
@@ -54,7 +54,7 @@
         type="number"
         etiyaInput="dark"
         formControlName="orderNumber"
-        onkeydown="return event.keyCode !== 69 && event.keyCode !== 107 && event.keyCode !== 109 && event.keyCode !== 110 && event.keyCode !== 188 && event.keyCode !== 190 "
+        (keypress)="isValid($event)"
       />
     </form>
   </div>

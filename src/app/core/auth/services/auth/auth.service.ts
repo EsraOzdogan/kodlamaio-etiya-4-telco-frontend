@@ -63,7 +63,6 @@ export class AuthService {
 
   get isAuthenticated(): boolean {
     if (this.jwtHelperService.isTokenExpired()) return false;
-
     return true;
   }
 

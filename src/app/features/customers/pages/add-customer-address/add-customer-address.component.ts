@@ -99,6 +99,9 @@ export class AddCustomerAddressComponent implements OnInit {
         ),
       };
       this.customerService.addAddress(addressToAdd, this.customer).subscribe();
+      this.router.navigateByUrl(
+        '/dashboard/customers/customer-address/' + this.selectedCustomerId
+      );
     }
   }
 

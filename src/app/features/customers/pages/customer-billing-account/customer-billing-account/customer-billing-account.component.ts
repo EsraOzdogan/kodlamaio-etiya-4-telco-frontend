@@ -22,7 +22,7 @@ export class CustomerBillingAccountComponent implements OnInit {
   billingAccount!: BillingAccount;
   billingAdress: Address[] = [];
   addresses!: Address;
-
+  mainAddress!: Address;
   constructor(
     private formBuilder: FormBuilder,
     private cityService: CityService,
@@ -102,6 +102,12 @@ export class CustomerBillingAccountComponent implements OnInit {
     this.billingAccount = this.accountForm.value;
     this.billingAccount.addresses = this.billingAdress;
     console.log(this.billingAccount);
+
+    //let findMainAddress = this.billingAccount.addresses.find(bill=>{bill.id ==this.mainAddress})
+    // let newBillingAccount: BillingAccount = {
+    //   ...this.accountForm.value,
+    //   addresses: [...this.billingAdress],
+    // };
     this.customerService
       .addBillingAccount(this.billingAccount, this.customer)
       .subscribe();
@@ -118,5 +124,29 @@ export class CustomerBillingAccountComponent implements OnInit {
           if (adr.isMain == true) this.addresses = adr;
         });
       });
+  }
+  handleConfigInput(event: any) {
+    this.mainAddress = event.target.value;
+    //this.add(event.target.value)
+    this.billingAccount.addresses = this.billingAccount.addresses?.map(
+      (adr) => {
+        const newAddress = { ...adr, isMain: false };
+        return newAddress;
+      }
+    );
+    if (this.addresses.id == event.target.value) {
+      //alert('ASXXXXXXXXXXXXX');
+      this.mainAddress = event.target.value;
+    } else {
+      let findAddressBill = this.billingAccount.addresses.find((adr) => {
+        return adr.id == event.target.value;
+      });
+      findAddressBill!.isMain = true;
+      this.mainAddress = findAddressBill!;
+    }
+
+    // this.customerService.update(this.customer).subscribe((data) => {
+    //   console.log(data);
+    // });
   }
 }

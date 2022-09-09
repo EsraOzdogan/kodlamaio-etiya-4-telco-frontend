@@ -1,3 +1,4 @@
+import { MessageService } from 'primeng/api';
 import { Customer } from './../../models/customer';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -11,16 +12,26 @@ import { CustomersService } from '../../services/customer/customers.service';
 export class CustomerAddressComponent implements OnInit {
   selectedCustomerId!: number;
   customerAddress: Address[] = [];
-  isChecked!: boolean;
   customer!: Customer;
+  addressToDelete!: Address;
+  displayBasic!: boolean;
+  findToAddress!: Address;
   constructor(
     private activatedRoute: ActivatedRoute,
     private customerService: CustomersService,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
     this.getCustomerById();
+    this.messageService.clearObserver.subscribe((data) => {
+      if (data == 'r') {
+        this.messageService.clear();
+      } else if (data == 'c') {
+        this.removeAddress();
+      }
+    });
   }
 
   getCustomerById() {
@@ -34,6 +45,8 @@ export class CustomerAddressComponent implements OnInit {
         .getCustomerById(this.selectedCustomerId)
         .subscribe((data) => {
           this.customer = data;
+          this.customerAddress = [];
+
           data.addresses?.forEach((adress) => {
             this.customerAddress.push(adress);
           });
@@ -52,15 +65,28 @@ export class CustomerAddressComponent implements OnInit {
       `/dashboard/customers/${this.selectedCustomerId}/address/update/${addressId}`
     );
   }
-  removeAddress(adr: Address) {
-    this.customerService.deleteAddress(this.selectedCustomerId);
 
-    this.customerService.delete(adr.id).subscribe((data) => {
-      //this.toastrService.success(data.description, " silindi")
-      setTimeout(() => {
-        location.reload();
-      }, 5000);
+  removePopup(address: Address) {
+    if (this.customer.addresses && this.customer.addresses?.length <= 1) {
+      this.displayBasic = true;
+      return;
+    }
+    this.addressToDelete = address;
+    this.messageService.add({
+      key: 'c',
+      sticky: true,
+      severity: 'warn',
+      detail: 'Are you sure to delete this address?',
     });
+  }
+
+  removeAddress() {
+    this.customerService
+      .deleteAddress(this.customer, this.addressToDelete)
+      .subscribe((data) => {
+        this.getCustomerById();
+        //location.reload();
+      });
   }
 
   handleConfigInput(event: any) {
@@ -73,7 +99,12 @@ export class CustomerAddressComponent implements OnInit {
     });
     findAddress!.isMain = true;
     this.customerService.update(this.customer).subscribe((data) => {
-      console.log(data);
+      this.getCustomerById();
     });
   }
+
+  // isChecked(address: Address): boolean {
+  //   if (this.findToAddress != address) return true;
+  //   return Boolean((this.findToAddress = address));
+  // }
 }

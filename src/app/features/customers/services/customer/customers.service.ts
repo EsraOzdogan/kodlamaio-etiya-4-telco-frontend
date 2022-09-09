@@ -116,7 +116,7 @@ export class CustomersService {
   addAddressInfoToStore(props: Address, customers: Customer) {
     const newAddress: Address = {
       ...props,
-      id: (customers.addresses?.length || 0) + 1,
+      id: Math.floor(Math.random() * 100000),
     };
     this.store.dispatch(addAddressInfo(newAddress));
   }
@@ -184,7 +184,7 @@ export class CustomersService {
       ...customer,
       addresses: [
         ...(customer.addresses || []),
-        { ...address, id: (customer.addresses?.length || 0) + 1 },
+        { ...address, id: Math.floor(Math.random() * 100000) },
       ],
     };
     return this.httpClient.put<Customer>(
@@ -235,7 +235,7 @@ export class CustomersService {
         ...(customer.billingAccounts || []),
         {
           ...billingAccount,
-          id: (customer.billingAccounts?.length || 0) + 1,
+          id: Math.floor(Math.random() * 100000),
           accountNumber: Math.floor(
             1000000000 + Math.random() * 90000000
           ).toString(),
@@ -243,15 +243,31 @@ export class CustomersService {
         },
       ],
     };
-    console.log(newCustomer);
     return this.httpClient.put<Customer>(
       `${this.apiControllerUrl}/${customer.id}`,
       newCustomer
     );
   }
 
-  deleteAddress(id: number): Observable<Customer> {
-    return this.httpClient.delete<Customer>(`${this.apiControllerUrl}/${id}`);
+  deleteAddress(
+    customer: Customer,
+    deleteToAddress: Address
+  ): Observable<Customer> {
+    let newAddresses: any = [];
+    if (customer.addresses) {
+      newAddresses = customer.addresses.filter(
+        (c) => c.id != deleteToAddress.id
+      );
+    }
+    const newCustomer: Customer = {
+      ...customer,
+      addresses: [...(newAddresses as Address[])],
+    };
+
+    return this.httpClient.put<Customer>(
+      `${this.apiControllerUrl}/${customer.id}`,
+      newCustomer
+    );
   }
 
   updateDemographicInfo(

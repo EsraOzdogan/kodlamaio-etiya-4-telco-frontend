@@ -61,11 +61,11 @@
                       <td>{{ offer.type.name }}</td>
                       <td>{{ offer.type.id }}</td>
                       <td></td>
-                      <td>
-                        <img src="../assets/img/delete_accordion.png" /><img
-                          src="../assets/img/eye_accordion.png"
-                        />
-                      </td>
+                      <a (click)="removePopup(billingAccount)">
+                        <img src="../assets/img/delete_accordion.png" />
+                      </a>
+
+                      <img src="../assets/img/eye_accordion.png" />
                     </tr>
                   </ng-template>
                 </ng-template>

@@ -14,6 +14,7 @@ export class ListAddressInfoComponent implements OnInit {
   customer!: Customer;
   addressToDelete!: Address;
   displayBasic!: boolean;
+  isChecked!: boolean;
   constructor(
     private customersService: CustomersService,
     private router: Router,
@@ -62,6 +63,7 @@ export class ListAddressInfoComponent implements OnInit {
       return adr.id == event.target.value;
     }) as Address;
     findAddress!.isMain = true;
+    this.isChecked = true;
 
     this.customersService.updateAddressInfoToStore(findAddress);
   }

@@ -36,10 +36,11 @@
                       </div>
                       <div class="col-12 col-lg-7 p-0">
                         <input
-                          type="text"
+                          type="number"
                           class="offer-input"
                           etiyaInput="dark"
                           formControlName="prodOfferId"
+                          (keypress)="isValid($event)"
                         />
                       </div>
                     </div>

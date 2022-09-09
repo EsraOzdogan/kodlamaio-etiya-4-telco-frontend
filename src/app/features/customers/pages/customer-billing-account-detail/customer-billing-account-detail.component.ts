@@ -1,4 +1,4 @@
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Product } from './../../models/product';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -14,6 +14,8 @@ export class CustomerBillingAccountDetailComponent implements OnInit {
   billingAccountList!: BillingAccount[];
   searchForm!: FormGroup;
   filteredData!: BillingAccount[];
+  displayBasic!: boolean;
+
   constructor(
     private customerService: CustomersService,
     private activatedRoute: ActivatedRoute,
@@ -26,7 +28,7 @@ export class CustomerBillingAccountDetailComponent implements OnInit {
   }
   createAccForm(): void {
     this.searchForm = this.formBuilder.group({
-      accountNumber: [''],
+      accountNumber: ['', Validators.pattern('^[0-9]{1,9}$')],
     });
   }
   getCustomerById() {
@@ -47,6 +49,17 @@ export class CustomerBillingAccountDetailComponent implements OnInit {
     this.filteredData = this.billingAccountList.filter(
       (item) => item.accountNumber == this.searchForm.value.accountNumber
     );
-    console.log(this.filteredData);
+    if (this.filteredData.length == 0) {
+      this.displayBasic = true;
+    }
+  }
+  isValid(event: any): boolean {
+    console.log(event);
+    const pattern = /[0-9]/;
+    const char = String.fromCharCode(event.which ? event.which : event.keyCode);
+    if (pattern.test(char)) return true;
+
+    event.preventDefault();
+    return false;
   }
 }

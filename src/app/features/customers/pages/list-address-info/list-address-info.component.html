@@ -57,6 +57,11 @@
                         id="flexRadioDefault1"
                         (change)="handleConfigInput($event)"
                         value="{{ address.id }}"
+                        [checked]="
+                          isChecked &&
+                          this.customer.addresses &&
+                          this.customer.addresses.length <= 1
+                        "
                       />
                       <label class="form-check-label" for="flexRadioDefault1">
                       </label>

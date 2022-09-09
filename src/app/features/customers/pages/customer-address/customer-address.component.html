@@ -48,9 +48,11 @@
                     (click)="selectAddressId(adr.id)"
                     etiyaButton="edit"
                   ></button>
+
                   <button
-                    (click)="removeAddress(adr)"
+                    (click)="removePopup(adr)"
                     etiyaButton="remove"
+                    *ngIf="!adr.isMain"
                   ></button>
                 </div>
                 <div class="form-check ml-3 mt-3">
@@ -61,6 +63,8 @@
                     id="flexRadioDefault1"
                     (change)="handleConfigInput($event)"
                     value="{{ adr.id }}"
+                    [checked]="adr.isMain == true"
+                    [disabled]="adr.isMain == true"
                   />
                   <label class="form-check-label" for="flexRadioDefault1">
                   </label>
@@ -84,3 +88,19 @@
     </button>
   </div>
 </app-main-layout>
+<p-dialog
+  [(visible)]="displayBasic"
+  [style]="{ width: '30vw', height: '20vw' }"
+>
+  <h5 class="header">Warning</h5>
+  <p>
+    The address cannot be deleted because the customer only has one address.
+  </p>
+  <p></p>
+  <ng-template pTemplate="footer">
+    <p-button
+      (click)="displayBasic = false"
+      styleClass="p-button-text"
+    ></p-button>
+  </ng-template>
+</p-dialog>

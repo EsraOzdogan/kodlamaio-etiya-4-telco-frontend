@@ -102,9 +102,4 @@ export class CustomerAddressComponent implements OnInit {
       this.getCustomerById();
     });
   }
-
-  // isChecked(address: Address): boolean {
-  //   if (this.findToAddress != address) return true;
-  //   return Boolean((this.findToAddress = address));
-  // }
 }

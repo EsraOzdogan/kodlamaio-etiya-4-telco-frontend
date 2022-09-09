@@ -46,6 +46,7 @@
                       <button
                         (click)="removePopup(address)"
                         etiyaButton="remove"
+                        *ngIf="!address.isMain"
                       ></button>
                     </div>
 
@@ -57,11 +58,8 @@
                         id="flexRadioDefault1"
                         (change)="handleConfigInput($event)"
                         value="{{ address.id }}"
-                        [checked]="
-                          isChecked &&
-                          this.customer.addresses &&
-                          this.customer.addresses.length <= 1
-                        "
+                        [checked]="address.isMain == true"
+                        [disabled]="address.isMain == true"
                       />
                       <label class="form-check-label" for="flexRadioDefault1">
                       </label>

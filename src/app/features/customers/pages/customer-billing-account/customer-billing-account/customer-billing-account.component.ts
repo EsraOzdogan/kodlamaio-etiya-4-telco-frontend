@@ -22,7 +22,7 @@ export class CustomerBillingAccountComponent implements OnInit {
   billingAccount!: BillingAccount;
   billingAdress: Address[] = [];
   addresses!: Address;
-  mainAddress!: Address;
+  mainAddres!: number;
   constructor(
     private formBuilder: FormBuilder,
     private cityService: CityService,
@@ -99,17 +99,14 @@ export class CustomerBillingAccountComponent implements OnInit {
   }
 
   add() {
-    this.billingAccount = this.accountForm.value;
-    this.billingAccount.addresses = this.billingAdress;
-    console.log(this.billingAccount);
-
-    //let findMainAddress = this.billingAccount.addresses.find(bill=>{bill.id ==this.mainAddress})
-    // let newBillingAccount: BillingAccount = {
-    //   ...this.accountForm.value,
-    //   addresses: [...this.billingAdress],
-    // };
+    //this.billingAccount = this.accountForm.value;
+    //this.billingAccount.addresses = this.billingAdress;
+    let newBillingAccount: BillingAccount = {
+      ...this.accountForm.value,
+      addresses: [...this.billingAdress, this.addresses],
+    };
     this.customerService
-      .addBillingAccount(this.billingAccount, this.customer)
+      .addBillingAccount(newBillingAccount, this.customer)
       .subscribe();
     this.router.navigateByUrl(
       '/dashboard/customers/customer-billing-account-detail/' +
@@ -126,7 +123,7 @@ export class CustomerBillingAccountComponent implements OnInit {
       });
   }
   handleConfigInput(event: any) {
-    this.mainAddress = event.target.value;
+    this.mainAddres = event.target.value;
     //this.add(event.target.value)
     this.billingAccount.addresses = this.billingAccount.addresses?.map(
       (adr) => {
@@ -134,19 +131,14 @@ export class CustomerBillingAccountComponent implements OnInit {
         return newAddress;
       }
     );
-    if (this.addresses.id == event.target.value) {
-      //alert('ASXXXXXXXXXXXXX');
-      this.mainAddress = event.target.value;
-    } else {
-      let findAddressBill = this.billingAccount.addresses.find((adr) => {
-        return adr.id == event.target.value;
-      });
-      findAddressBill!.isMain = true;
-      this.mainAddress = findAddressBill!;
-    }
 
-    // this.customerService.update(this.customer).subscribe((data) => {
-    //   console.log(data);
-    // });
+    let findAddressBill = this.billingAccount.addresses.find((adr) => {
+      return adr.id == event.target.value;
+    });
+
+    findAddressBill!.isMain = true;
+    this.customerService.update(this.customer).subscribe((data) => {
+      //this.getCustomerById();
+    });
   }
 }

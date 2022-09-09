@@ -97,6 +97,7 @@ export class AddCustomerAddressComponent implements OnInit {
         city: this.cityList.find(
           (city) => city.id == this.addressForm.value.city
         ),
+        isMain: this.isMainAdd(),
       };
       this.customerService.addAddress(addressToAdd, this.customer).subscribe();
       this.router.navigateByUrl(
@@ -113,6 +114,7 @@ export class AddCustomerAddressComponent implements OnInit {
         city: this.cityList.find(
           (city) => city.id == this.addressForm.value.city
         ),
+        isMain: this.getSelectedIsMain(),
       };
       this.customerService
         .updateAddress(addressToUpdate, this.customer)
@@ -121,5 +123,16 @@ export class AddCustomerAddressComponent implements OnInit {
     this.router.navigateByUrl(
       '/dashboard/customers/customer-address/' + this.selectedCustomerId
     );
+  }
+
+  isMainAdd() {
+    return this.customer.addresses?.length == 0 ? true : false;
+  }
+
+  getSelectedIsMain() {
+    let selectedAddress = this.customer.addresses?.find(
+      (address) => address.id == this.selectedAddressId
+    );
+    return selectedAddress?.isMain;
   }
 }

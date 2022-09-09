@@ -23,6 +23,7 @@ export class CustomerBillingAccountComponent implements OnInit {
   billingAdress: Address[] = [];
   addresses!: Address;
   mainAddres!: number;
+  newAddress!: Address[];
   constructor(
     private formBuilder: FormBuilder,
     private cityService: CityService,
@@ -92,15 +93,15 @@ export class CustomerBillingAccountComponent implements OnInit {
       city: this.cityList.find(
         (city) => city.id == this.addressForm.value.city.id
       ),
+      isMain: false,
     };
     this.billingAdress.push(addressToAdd);
-    console.log(this.billingAdress);
+    //console.log(this.billingAdress);
     this.isShown = false;
+    this.newAddress = [...this.billingAdress, this.addresses];
   }
 
   add() {
-    //this.billingAccount = this.accountForm.value;
-    //this.billingAccount.addresses = this.billingAdress;
     let newBillingAccount: BillingAccount = {
       ...this.accountForm.value,
       addresses: [...this.billingAdress, this.addresses],
@@ -125,18 +126,33 @@ export class CustomerBillingAccountComponent implements OnInit {
   handleConfigInput(event: any) {
     this.mainAddres = event.target.value;
     //this.add(event.target.value)
-    this.billingAccount.addresses = this.billingAccount.addresses?.map(
-      (adr) => {
-        const newAddress = { ...adr, isMain: false };
-        return newAddress;
-      }
-    );
 
-    let findAddressBill = this.billingAccount.addresses.find((adr) => {
+    this.newAddress = this.newAddress?.map((adr) => {
+      const newAddress = { ...adr, isMain: false };
+      return newAddress;
+    });
+
+    //console.warn(this.newAddress);
+
+    let findAddressBill = this.newAddress.find((adr) => {
       return adr.id == event.target.value;
     });
 
-    findAddressBill!.isMain = true;
+    //findAddressBill!.isMain = true;
+    if (this.addresses === findAddressBill) {
+      this.addresses.isMain = true;
+    } else {
+      this.addresses.isMain = false;
+    }
+
+    this.billingAdress.forEach((bill) => {
+      if (bill.id === findAddressBill?.id) {
+        bill.isMain = true;
+      } else {
+        bill.isMain = false;
+      }
+    });
+
     this.customerService.update(this.customer).subscribe((data) => {
       //this.getCustomerById();
     });

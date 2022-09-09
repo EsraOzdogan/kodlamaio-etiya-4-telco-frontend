@@ -17,6 +17,7 @@ import { CustomerContactMediumComponent } from './pages/customer-contact-medium/
 import { OfferSelectionComponent } from './pages/offer-selection/offer-selection.component';
 import { ConfigurationProductComponent } from './pages/configuration-product/configuration-product.component';
 import { AddCustomerAddressComponent } from './pages/add-customer-address/add-customer-address.component';
+import { UpdateCreateBillAccountAddressComponent } from './pages/update-create-bill-account-address/update-create-bill-account-address.component';
 
 const routes: Routes = [
   // dashboard/customers/:id/address/update/:addressId
@@ -60,6 +61,10 @@ const routes: Routes = [
   },
 
   { path: 'update-address-info/:id', component: AddAddressInfoComponent },
+  {
+    path: ':id/bill-address/update/:addressId',
+    component: UpdateCreateBillAccountAddressComponent,
+  },
 ];
 
 @NgModule({

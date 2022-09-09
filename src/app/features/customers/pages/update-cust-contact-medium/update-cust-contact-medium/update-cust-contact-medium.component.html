@@ -94,7 +94,13 @@
                 </button>
               </div>
               <div class="col-6 d-flex justify-content-lg-end">
-                <button etiyaButton="clear" (click)="update()">SAVE</button>
+                <button
+                  etiyaButton="clear"
+                  [disabled]="!this.updateCustomerContactForm.valid"
+                  (click)="update()"
+                >
+                  SAVE
+                </button>
               </div>
             </div>
           </div>

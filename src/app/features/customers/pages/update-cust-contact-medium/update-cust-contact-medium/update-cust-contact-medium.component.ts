@@ -33,13 +33,13 @@ export class UpdateCustContactMediumComponent implements OnInit {
 
   createFormUpdateContactCustomer() {
     this.updateCustomerContactForm = this.formBuilder.group({
-      email: [this.customer.contactMedium?.email, Validators.email],
-      homePhone: [this.customer.contactMedium?.homePhone],
+      email: [this.customer.contactMedium?.email, [Validators.required, Validators.email]],
+      homePhone: [this.customer.contactMedium?.homePhone, Validators.pattern('^[0-9]{11}$')],
       mobilePhone: [
         this.customer.contactMedium?.mobilePhone,
         [Validators.pattern('^[0-9]{11}$'), Validators.required],
       ],
-      fax: [this.customer.contactMedium?.fax],
+      fax: [this.customer.contactMedium?.fax, Validators.pattern('^[0-9]{11}$')],
     });
   }
   getCustomerById() {

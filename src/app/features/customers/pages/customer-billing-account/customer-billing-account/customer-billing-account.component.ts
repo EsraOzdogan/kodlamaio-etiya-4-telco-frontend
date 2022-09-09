@@ -1,3 +1,4 @@
+import { MessageService } from 'primeng/api';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -24,18 +25,30 @@ export class CustomerBillingAccountComponent implements OnInit {
   addresses!: Address;
   mainAddres!: number;
   newAddress!: Address[];
+  displayBasic!: boolean;
+  addressToDelete!: Address;
+  findToAddress!: Address;
+
   constructor(
     private formBuilder: FormBuilder,
     private cityService: CityService,
     private customerService: CustomersService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
     this.getParams();
     this.getCityList();
     this.getMainAddress();
+    this.messageService.clearObserver.subscribe((data) => {
+      if (data == 'r') {
+        this.messageService.clear();
+      } else if (data == 'c') {
+        this.removeAddress();
+      }
+    });
   }
 
   getParams() {
@@ -125,26 +138,20 @@ export class CustomerBillingAccountComponent implements OnInit {
   }
   handleConfigInput(event: any) {
     this.mainAddres = event.target.value;
-    //this.add(event.target.value)
 
     this.newAddress = this.newAddress?.map((adr) => {
       const newAddress = { ...adr, isMain: false };
       return newAddress;
     });
-
-    //console.warn(this.newAddress);
-
     let findAddressBill = this.newAddress.find((adr) => {
       return adr.id == event.target.value;
     });
 
-    //findAddressBill!.isMain = true;
     if (this.addresses === findAddressBill) {
       this.addresses.isMain = true;
     } else {
       this.addresses.isMain = false;
     }
-
     this.billingAdress.forEach((bill) => {
       if (bill.id === findAddressBill?.id) {
         bill.isMain = true;
@@ -152,9 +159,37 @@ export class CustomerBillingAccountComponent implements OnInit {
         bill.isMain = false;
       }
     });
-
     this.customerService.update(this.customer).subscribe((data) => {
       //this.getCustomerById();
     });
+  }
+
+  selectAddressId(addressId: number) {
+    this.router.navigateByUrl(
+      `/dashboard/customers/${this.selectedCustomerId}/address/update/${addressId}`
+    );
+  }
+
+  removePopup(address: Address) {
+    if (this.customer.addresses && this.customer.addresses?.length <= 1) {
+      this.displayBasic = true;
+      return;
+    }
+    this.addressToDelete = address;
+    this.messageService.add({
+      key: 'c',
+      sticky: true,
+      severity: 'warn',
+      detail: 'Are you sure to delete this address?',
+    });
+  }
+
+  removeAddress() {
+    this.customerService
+      .deleteAddress(this.customer, this.addressToDelete)
+      .subscribe((data) => {
+        this.getCustomerById();
+        //location.reload();
+      });
   }
 }

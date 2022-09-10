@@ -20,7 +20,8 @@ export class TableAccordionComponent implements OnInit {
   billingAccountToDelete!: BillingAccount;
   constructor(
     private messageService: MessageService,
-    private customerService: CustomersService
+    private customerService: CustomersService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -101,5 +102,11 @@ export class TableAccordionComponent implements OnInit {
     setTimeout(() => {
       this.messageService.clear();
     }, 5000);
+  }
+
+  updateBillingAccount(billingAccount: BillingAccount) {
+    this.router.navigateByUrl(
+      `/dashboard/customers/${this.customerId}/customer-bill/update/${billingAccount.id}`
+    );
   }
 }

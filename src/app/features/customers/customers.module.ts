@@ -23,6 +23,7 @@ import { CityModule } from '../city/city.module';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { UpdateCreateBillAccountAddressComponent } from './pages/update-create-bill-account-address/update-create-bill-account-address.component';
+import { UpdateCustomerBillingAccountComponent } from './pages/update-customer-billing-account/update-customer-billing-account.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { UpdateCreateBillAccountAddressComponent } from './pages/update-create-b
     OfferSelectionComponent,
     AddCustomerAddressComponent,
     UpdateCreateBillAccountAddressComponent,
+    UpdateCustomerBillingAccountComponent,
   ],
   imports: [
     CommonModule,

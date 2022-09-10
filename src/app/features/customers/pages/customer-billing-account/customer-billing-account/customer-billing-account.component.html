@@ -91,7 +91,7 @@
                               billingAdress && billingAdress.length <= 1
                             "
                             [disabled]="
-                              addresses.isMain == true &&
+                              addresses.isPrimary == true &&
                               this.customer.addresses &&
                               this.customer.addresses.length <= 1
                             "
@@ -119,7 +119,7 @@
                       <button
                         (click)="removePopup(addresses)"
                         etiyaButton="remove"
-                        [disabled]="addresses.isMain"
+                        [disabled]="addresses.isPrimary"
                       ></button>
                     </td>
                   </tr>
@@ -163,7 +163,7 @@
                         <button
                           (click)="removePopup(addresses)"
                           etiyaButton="remove"
-                          [disabled]="addresses.isMain"
+                          [disabled]="addresses.isPrimary"
                         ></button>
                       </td>
                     </tr>
@@ -180,7 +180,7 @@
                               (change)="handleConfigInput($event)"
                               value="{{ billingadr.id }}"
                               [disabled]="
-                                billingadr.isMain == true &&
+                                billingadr.isPrimary == true &&
                                 this.customer.addresses &&
                                 this.customer.addresses.length <= 1
                               "
@@ -207,7 +207,7 @@
                         <button
                           (click)="removePopup(billingadr)"
                           etiyaButton="remove"
-                          [disabled]="billingadr.isMain"
+                          [disabled]="billingadr.isPrimary"
                         ></button>
                       </td>
                     </tr>
@@ -250,14 +250,14 @@
                   <div class="e-dropdown">
                     <select
                       etiyaInput="dark"
-                      name="gender"
-                      id="gender"
+                      name="city"
+                      id="city"
                       formControlName="city"
                     >
                       <option selected disabled hidden value="">
                         Choose a city
                       </option>
-                      <option *ngFor="let city of cityList" [ngValue]="city">
+                      <option *ngFor="let city of cityList" [ngValue]="city.id">
                         {{ city.name }}
                       </option>
                     </select>
@@ -319,7 +319,7 @@
               <button
                 etiyaButton="clear"
                 [disabled]="addressForm.invalid"
-                (click)="addAddress()"
+                (click)="saveAddress()"
               >
                 SAVE
               </button>

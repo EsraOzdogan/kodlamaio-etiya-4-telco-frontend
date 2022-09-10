@@ -6,5 +6,5 @@ export interface Address {
   street: string;
   flatNumber: number;
   description: string;
-  isMain: boolean;
+  isPrimary: boolean;
 }

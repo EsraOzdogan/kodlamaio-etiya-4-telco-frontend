@@ -128,13 +128,13 @@ export class ConfigurationProductComponent implements OnInit {
   }
   handleConfigRadio(event: any) {
     this.billingAdress = this.billingAdress?.map((adr) => {
-      const newAddress = { ...adr, isMain: false };
+      const newAddress = { ...adr, isPrimary: false };
       return newAddress;
     });
     let findAddress = this.billingAdress?.find((adr) => {
       return adr.id == event.target.value;
     });
-    findAddress!.isMain = true;
+    findAddress!.isPrimary = true;
     this.customersService.update(this.customer).subscribe((data) => {
       this.getCustomerById();
     });

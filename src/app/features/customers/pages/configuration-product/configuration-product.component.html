@@ -290,9 +290,9 @@
                           id="flexRadioDefault1"
                           (change)="handleConfigRadio($event)"
                           value="{{ billingadr.id }}"
-                          [checked]="billingadr.isMain == true"
+                          [checked]="billingadr.isPrimary == true"
                           [disabled]="
-                            billingadr.isMain == true &&
+                            billingadr.isPrimary == true &&
                             billingAdress.length <= 1
                           "
                         />

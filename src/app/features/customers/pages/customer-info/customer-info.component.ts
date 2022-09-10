@@ -13,6 +13,7 @@ export class CustomerInfoComponent implements OnInit {
   customer!: Customer;
   customerToDelete!: Customer;
   displayBasic!: boolean;
+  finder: Object[] = [];
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -68,25 +69,29 @@ export class CustomerInfoComponent implements OnInit {
       detail: 'Are you sure to delete this customer?',
     });
   }
+
   remove() {
     this.customerToDelete.billingAccounts?.forEach((bill) => {
       bill.orders.forEach((ord) => {
         ord.offers?.forEach((ofr) => {
-          let findActiveProduct = ofr.products.find((product) => {
-            product.status === 'active';
+          let object = ofr.products.filter((pro) => {
+            return pro.status == 'active';
           });
-          if (findActiveProduct) {
-            this.displayBasic = true;
-            return;
-          } else {
-            this.customerService
-              .delete(this.customerToDelete.id as number)
-              .subscribe((data) => {
-                this.router.navigateByUrl(`/dashboard`);
-              });
-          }
+          if (object.length != 0) this.finder.push(object);
         });
       });
     });
+
+    console.log(this.finder);
+    if (this.finder.length == 0) {
+      if (this.customerToDelete.id)
+        this.customerService
+          .delete(this.customerToDelete.id)
+          .subscribe((data) => {
+            this.router.navigateByUrl(`/dashboard`);
+          });
+    } else {
+      return;
+    }
   }
 }

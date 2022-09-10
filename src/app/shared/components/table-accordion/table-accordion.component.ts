@@ -1,3 +1,4 @@
+import { Product } from 'src/app/features/customers/models/product';
 import { Customer } from 'src/app/features/customers/models/customer';
 import { Router } from '@angular/router';
 import { CustomersService } from 'src/app/features/customers/services/customer/customers.service';
@@ -14,6 +15,8 @@ export class TableAccordionComponent implements OnInit {
   @Input() billingAccount!: BillingAccount;
   @Input() customerId!: number;
   customer!: Customer;
+  finder: Object[] = [];
+  activeProduct!: Product[];
   billingAccountToDelete!: BillingAccount;
   constructor(
     private messageService: MessageService,
@@ -26,18 +29,20 @@ export class TableAccordionComponent implements OnInit {
       if (data == 'reject') {
         this.messageService.clear();
       } else if (data == 'confirm') {
-        if (this.billingAccountToDelete.orders.length > 0) {
-          this.messageService.clear();
-          this.messageService.add({
-            key: 'message',
-            severity: 'warn',
-            detail:
-              'There is a product belonging to the account, this account cannot be deleted',
+        this.customer.billingAccounts?.forEach((bill) => {
+          bill.orders.forEach((ord) => {
+            ord.offers?.forEach((ofr) => {
+              this.activeProduct = ofr.products.filter((pro) => {
+                return pro.status == 'active';
+              });
+              console.warn(this.activeProduct);
+              if (this.activeProduct.length != 0)
+                this.finder.push(this.activeProduct);
+            });
           });
-          setTimeout(() => {
-            this.messageService.clear();
-          }, 5000);
-        } else {
+        });
+
+        if (this.finder.length == 0) {
           this.messageService.clear();
           this.messageService.add({
             key: 'etiya-custom',
@@ -48,6 +53,8 @@ export class TableAccordionComponent implements OnInit {
             this.messageService.clear();
           }, 3000);
           this.remove();
+        } else {
+          this.getActiveProductMessage();
         }
       }
     });
@@ -65,12 +72,6 @@ export class TableAccordionComponent implements OnInit {
   }
   removePopup(billingAccount: BillingAccount) {
     this.billingAccountToDelete = billingAccount;
-
-    // if (this.billingAccount) {
-    //   //this.displayBasic = true;
-    //   return;
-    // }
-    //this.addressToDelete = address;
     this.messageService.add({
       key: 'c',
       sticky: true,
@@ -87,5 +88,18 @@ export class TableAccordionComponent implements OnInit {
           window.location.reload();
         }, 3000);
       });
+  }
+
+  getActiveProductMessage() {
+    this.messageService.clear();
+    this.messageService.add({
+      key: 'message',
+      severity: 'warn',
+      detail:
+        'There is a product belonging to the account, this account cannot be deleted',
+    });
+    setTimeout(() => {
+      this.messageService.clear();
+    }, 5000);
   }
 }

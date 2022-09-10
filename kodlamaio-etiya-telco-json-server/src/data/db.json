@@ -76,14 +76,14 @@
                       "name": "32 Mbps ADSL",
                       "description ": "Duis ac nibh.",
                       "amount": 57,
-                      "status":"active"
+                      "status":"canceled"
                     },
                     {
                       "id": 6,
                       "name": "EtiMaster Data Modem",
                       "description ": "Nunc nisl.",
                       "amount": 50,
-                      "status":"active"
+                      "status":"canceled"
 
                     },
                     {
@@ -91,7 +91,7 @@
                       "name": "Activation",
                       "description ": "Duis consequat dui nec nisi volutpat eleifend.",
                       "amount": 30,
-                      "status":"active"
+                      "status":"canceled"
                     }
                   ]
                 }
@@ -167,7 +167,7 @@
                       "name": "Activation",
                       "description ": "Duis consequat dui nec nisi volutpat eleifend.",
                       "amount": 30,
-                      "status":"active"
+                      "status":"canceled"
                     }
                   ]
                 }
@@ -190,14 +190,14 @@
                       "name": "TV Broadcast",
                       "description ": "Integer tincidunt ante vel ipsum.",
                       "amount": 30,
-                      "status":"active"
+                      "status":"canceled"
                     },
                     {
                       "id": 15,
                       "name": "Etimaster Satellite Receiver 45121",
                       "description ": "Sed accumsan felis.",
                       "amount": 40,
-                      "status":"active"
+                      "status":"canceled"
                     }
                   ]
                 }

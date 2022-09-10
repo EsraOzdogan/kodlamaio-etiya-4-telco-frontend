@@ -1,8 +1,6 @@
 import {
   removeAddressInfo,
-  removeBillingAccountAddressInfo,
   updateAddressInfo,
-  updateBillingAccountAddressInfo,
 } from './../../../../shared/store/customers/customerToAdd/customerToAdd.actions';
 import {
   addAddressInfo,
@@ -129,12 +127,6 @@ export class CustomersService {
     };
     this.store.dispatch(updateAddressInfo(newAddress));
   }
-  updateBillingAccountAddressInfoToStore(props: Address) {
-    const newAddress: Address = {
-      ...props,
-    };
-    this.store.dispatch(updateBillingAccountAddressInfo(newAddress));
-  }
 
   setContactMediumInfoToStore(props: ContactMedium) {
     this.store.dispatch(setContactMediumInfo(props));
@@ -161,10 +153,6 @@ export class CustomersService {
 
   removeAdress(address: Address) {
     this.store.dispatch(removeAddressInfo(address));
-  }
-
-  removeBillingAccountAddressInfo(address: Address) {
-    this.store.dispatch(removeBillingAccountAddressInfo(address));
   }
 
   add(customer: Customer): Observable<Customer> {

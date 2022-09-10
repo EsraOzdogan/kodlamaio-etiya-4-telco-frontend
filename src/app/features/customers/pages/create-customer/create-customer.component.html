@@ -207,7 +207,7 @@
                   class="col-12 col-lg-8 d-flex justify-content-lg-start align-items-center"
                 >
                   <input
-                    type="number"
+                    type="text"
                     etiyaInput="dark"
                     formControlName="nationalityId"
                     [ngClass]="{
@@ -216,6 +216,7 @@
                     }"
                     onKeyPress="if(this.value.length==11) return false;"
                     (keypress)="isValid($event)"
+                    onkeydown="return event.keyCode !== 17 &&  event.keyCode !== 86 "
                   />
                 </div>
                 <small

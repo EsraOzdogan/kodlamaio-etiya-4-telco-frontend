@@ -14,7 +14,6 @@ export class CustomerAddressComponent implements OnInit {
   customerAddress: Address[] = [];
   customer!: Customer;
   addressToDelete!: Address;
-  displayBasic!: boolean;
   findToAddress!: Address;
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -26,9 +25,9 @@ export class CustomerAddressComponent implements OnInit {
   ngOnInit(): void {
     this.getCustomerById();
     this.messageService.clearObserver.subscribe((data) => {
-      if (data == 'r') {
+      if (data == 'reject') {
         this.messageService.clear();
-      } else if (data == 'c') {
+      } else if (data == 'confirm') {
         this.removeAddress();
       }
     });
@@ -68,7 +67,14 @@ export class CustomerAddressComponent implements OnInit {
 
   removePopup(address: Address) {
     if (this.customer.addresses && this.customer.addresses?.length <= 1) {
-      this.displayBasic = true;
+      this.messageService.clear();
+      this.messageService.add({
+        key: 'message',
+        severity: 'warn',
+        detail:
+          ' The address cannot be deleted because the customer only has one address.',
+      });
+
       return;
     }
     this.addressToDelete = address;

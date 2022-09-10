@@ -125,7 +125,9 @@
                     type="text"
                     etiyaInput="dark"
                     formControlName="nationalityId"
+                    (keypress)="isValid($event)"
                     onKeyPress="if(this.value.length==11) return false;"
+                    onkeydown="return event.keyCode !== 17 &&  event.keyCode !== 86 "
                   />
                 </div>
               </div>

@@ -35,6 +35,7 @@
                     type="text"
                     etiyaInput="dark"
                     formControlName="email"
+                    placeholder="admin@admin.com"
                   />
                 </div>
               </div>
@@ -43,11 +44,12 @@
                   <label class="col-5" for="homePhone">Home Phone :</label>
                   <input
                     class="col-7"
-                    type="number "
+                    type="text "
                     etiyaInput="dark"
                     formControlName="homePhone"
                     onKeyPress="if(this.value.length==11) return false;"
                     (keypress)="isValid($event)"
+                    onkeydown="return event.keyCode !== 17 &&  event.keyCode !== 86 "
                   />
                 </div>
               </div>
@@ -57,11 +59,12 @@
                   <label class="col-5" for="mobilePhone">Mobile Phone :</label>
                   <input
                     class="col-7"
-                    type="number "
+                    type="text "
                     etiyaInput="dark"
                     formControlName="mobilePhone"
                     onKeyPress="if(this.value.length==11) return false;"
                     (keypress)="isValid($event)"
+                    onkeydown="return event.keyCode !== 17 &&  event.keyCode !== 86 "
                   />
                 </div>
               </div>
@@ -70,11 +73,12 @@
                   <label class="col-5" for="faxNumber">Fax :</label>
                   <input
                     class="col-7"
-                    type="number"
+                    type="text"
                     etiyaInput="dark"
                     formControlName="fax"
                     onKeyPress="if(this.value.length==11) return false;"
                     (keypress)="isValid($event)"
+                    onkeydown="return event.keyCode !== 17 &&  event.keyCode !== 86 "
                   />
                 </div>
               </div>

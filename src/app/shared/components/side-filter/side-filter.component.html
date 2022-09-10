@@ -11,36 +11,40 @@
     <form [formGroup]="searchForm">
       <label class="e-label mt-4">Nationality ID</label>
       <input
-        type="number"
+        type="text"
         etiyaInput="dark"
         formControlName="nationalityId"
         onKeyPress="if(this.value.length==11) return false;"
         (keypress)="isValid($event)"
+        onkeydown="return event.keyCode !== 17 &&  event.keyCode !== 86 "
       />
 
       <label class="e-label">CUSTOMER ID</label>
       <input
-        type="number"
+        type="text"
         etiyaInput="dark"
         formControlName="customerId"
         (keypress)="isValid($event)"
+        onkeydown="return event.keyCode !== 17 &&  event.keyCode !== 86 "
       />
 
       <label class="e-label">ACCOUNT NUMBER</label>
       <input
-        type="number"
+        type="text"
         etiyaInput="dark"
         formControlName="accountNumber"
         (keypress)="isValid($event)"
+        onkeydown="return event.keyCode !== 17 &&  event.keyCode !== 86 "
       />
 
       <label class="e-label">GSM NUMBER</label>
       <input
-        type="number"
+        type="text"
         etiyaInput="dark"
         formControlName="gsmNumber"
         onKeyPress="if(this.value.length==11) return false;"
         (keypress)="isValid($event)"
+        onkeydown="return event.keyCode !== 17 &&  event.keyCode !== 86 "
       />
 
       <label class="e-label">FIRST NAME</label>
@@ -51,10 +55,11 @@
 
       <label class="e-label">ORDER NUMBER</label>
       <input
-        type="number"
+        type="text"
         etiyaInput="dark"
         formControlName="orderNumber"
         (keypress)="isValid($event)"
+        onkeydown="return event.keyCode !== 17 &&  event.keyCode !== 86 "
       />
     </form>
   </div>

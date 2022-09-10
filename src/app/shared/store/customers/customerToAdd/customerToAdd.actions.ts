@@ -1,3 +1,4 @@
+import { BillingAccount } from './../../../../features/customers/models/billingAccount';
 import { createAction, props } from '@ngrx/store';
 import { Address } from '../../../../features/customers/models/address';
 import { ContactMedium } from '../../../../features/customers/models/contactMedium';
@@ -23,4 +24,12 @@ export const removeAddressInfo = createAction(
 export const setContactMediumInfo = createAction(
   '[CustomerToAdd] Set ContactMedium Info',
   props<ContactMedium>()
+);
+export const removeBillingAccountAddressInfo = createAction(
+  '[CustomerToAdd] Remove Billing Account Address Info',
+  props<Address>()
+);
+export const updateBillingAccountAddressInfo = createAction(
+  '[CustomerToAdd] Update Billing Account Address Info',
+  props<Address>()
 );

@@ -35,12 +35,13 @@
         <div class="row">
           <div class="d-flex justify-content-lg-start align-items-center">
             <input
-              type="number"
+              type="text"
               etiyaInput="dark"
               id="accountNumber"
               formControlName="accountNumber"
               onKeyPress="if(this.value.length==10) return false;"
               (keypress)="isValid($event)"
+              onkeydown="return event.keyCode !== 17 &&  event.keyCode !== 86 "
             />
 
             <button
@@ -76,17 +77,3 @@
     </div>
   </div>
 </app-main-layout>
-<p-dialog
-  [(visible)]="displayBasic"
-  [style]="{ width: '30vw', height: '20vw' }"
->
-  <h5 class="header">Warning</h5>
-  <p>No account found for this number</p>
-  <p></p>
-  <ng-template pTemplate="footer">
-    <p-button
-      (click)="displayBasic = false"
-      styleClass="p-button-text"
-    ></p-button>
-  </ng-template>
-</p-dialog>

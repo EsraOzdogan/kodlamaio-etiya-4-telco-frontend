@@ -1,6 +1,8 @@
 import {
   removeAddressInfo,
+  removeBillingAccountAddressInfo,
   updateAddressInfo,
+  updateBillingAccountAddressInfo,
 } from './../../../../shared/store/customers/customerToAdd/customerToAdd.actions';
 import {
   addAddressInfo,
@@ -127,6 +129,12 @@ export class CustomersService {
     };
     this.store.dispatch(updateAddressInfo(newAddress));
   }
+  updateBillingAccountAddressInfoToStore(props: Address) {
+    const newAddress: Address = {
+      ...props,
+    };
+    this.store.dispatch(updateBillingAccountAddressInfo(newAddress));
+  }
 
   setContactMediumInfoToStore(props: ContactMedium) {
     this.store.dispatch(setContactMediumInfo(props));
@@ -153,6 +161,10 @@ export class CustomersService {
 
   removeAdress(address: Address) {
     this.store.dispatch(removeAddressInfo(address));
+  }
+
+  removeBillingAccountAddressInfo(address: Address) {
+    this.store.dispatch(removeBillingAccountAddressInfo(address));
   }
 
   add(customer: Customer): Observable<Customer> {
@@ -270,6 +282,43 @@ export class CustomersService {
     );
   }
 
+  deleteBillingAccountAddress(
+    customer: Customer,
+    deleteToAddress: Address
+  ): Observable<Customer> {
+    let newAddresses: any = [];
+    let acc: any = [];
+    acc = customer.billingAccounts;
+    let findDeleteAddress = customer.billingAccounts?.find((bill) => {
+      bill.addresses.forEach((adr) => {
+        return adr.id == deleteToAddress.id;
+      });
+    });
+    if (findDeleteAddress)
+      newAddresses = customer.billingAccounts?.filter((bill) => {
+        bill.addresses.forEach((adr) => {
+          adr.id != deleteToAddress.id;
+        });
+      });
+
+    const newCustomer: Customer = {
+      ...customer,
+
+      billingAccounts: [
+        ...(customer.billingAccounts || []),
+        {
+          ...acc,
+          addresses: [...(newAddresses as Address[])],
+        },
+      ],
+    };
+
+    return this.httpClient.put<Customer>(
+      `${this.apiControllerUrl}/${customer.id}`,
+      newCustomer
+    );
+  }
+
   updateDemographicInfo(
     customerDemographicInfo: any,
     customer: Customer
@@ -285,6 +334,24 @@ export class CustomersService {
       motherName: customerDemographicInfo.motherName,
       fatherName: customerDemographicInfo.fatherName,
     };
+    return this.httpClient.put<Customer>(
+      `${this.apiControllerUrl}/${customer.id}`,
+      newCustomer
+    );
+  }
+
+  removeBillingAccount(
+    billingAccountToDelete: BillingAccount,
+    customer: Customer
+  ): Observable<Customer> {
+    const newCustomer: Customer = {
+      ...customer,
+    };
+    const newBillingAccount = customer.billingAccounts?.filter(
+      (bill) => bill.id != billingAccountToDelete.id
+    );
+    newCustomer.billingAccounts = newBillingAccount;
+
     return this.httpClient.put<Customer>(
       `${this.apiControllerUrl}/${customer.id}`,
       newCustomer

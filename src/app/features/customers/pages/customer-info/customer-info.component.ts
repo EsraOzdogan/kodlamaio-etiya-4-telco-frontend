@@ -24,9 +24,17 @@ export class CustomerInfoComponent implements OnInit {
   ngOnInit(): void {
     this.getCustomerById();
     this.messageService.clearObserver.subscribe((data) => {
-      if (data == 'r') {
+      if (data == 'reject') {
         this.messageService.clear();
-      } else if (data == 'c') {
+      } else if (data == 'confirm') {
+        this.messageService.clear();
+        this.messageService.add({
+          key: 'message',
+          severity: 'warn',
+          detail:
+            ' Customer cannot be deleted because the customer has active products',
+        });
+
         this.remove();
       }
     });
@@ -64,16 +72,18 @@ export class CustomerInfoComponent implements OnInit {
     this.customerToDelete.billingAccounts?.forEach((bill) => {
       bill.orders.forEach((ord) => {
         ord.offers?.forEach((ofr) => {
-          if (ofr.products.length == 0) {
-            if (this.customerToDelete.id)
-              this.customerService
-                .delete(this.customerToDelete.id)
-                .subscribe((data) => {
-                  this.router.navigateByUrl(`/dashboard`);
-                });
-          } else {
+          let findActiveProduct = ofr.products.find((product) => {
+            product.status === 'active';
+          });
+          if (findActiveProduct) {
             this.displayBasic = true;
             return;
+          } else {
+            this.customerService
+              .delete(this.customerToDelete.id as number)
+              .subscribe((data) => {
+                this.router.navigateByUrl(`/dashboard`);
+              });
           }
         });
       });

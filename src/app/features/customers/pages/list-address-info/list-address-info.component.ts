@@ -13,7 +13,6 @@ import { Address } from '../../models/address';
 export class ListAddressInfoComponent implements OnInit {
   customer!: Customer;
   addressToDelete!: Address;
-  displayBasic!: boolean;
   isChecked!: boolean;
   constructor(
     private customersService: CustomersService,
@@ -26,9 +25,9 @@ export class ListAddressInfoComponent implements OnInit {
       this.customer = state;
     });
     this.messageService.clearObserver.subscribe((data) => {
-      if (data == 'r') {
+      if (data == 'reject') {
         this.messageService.clear();
-      } else if (data == 'c') {
+      } else if (data == 'confirm') {
         this.remove();
       }
     });
@@ -39,7 +38,13 @@ export class ListAddressInfoComponent implements OnInit {
   }
   removePopup(address: Address) {
     if (this.customer.addresses && this.customer.addresses?.length <= 1) {
-      this.displayBasic = true;
+      this.messageService.clear();
+      this.messageService.add({
+        key: 'message',
+        severity: 'warn',
+        detail:
+          'The address cannot be deleted because the customer only has one address',
+      });
       return;
     }
     this.addressToDelete = address;

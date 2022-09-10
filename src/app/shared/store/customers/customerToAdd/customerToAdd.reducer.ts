@@ -1,12 +1,15 @@
+import { BillingAccount } from './../../../../features/customers/models/billingAccount';
 import { createReducer, on } from '@ngrx/store';
 import { Address } from '../../../../features/customers/models/address';
 import { Customer } from '../../../../features/customers/models/customer';
 import {
   addAddressInfo,
   removeAddressInfo,
+  removeBillingAccountAddressInfo,
   setContactMediumInfo,
   setDemographicInfo,
   updateAddressInfo,
+  updateBillingAccountAddressInfo,
 } from './customerToAdd.actions';
 
 const initialState: Customer = {
@@ -74,5 +77,51 @@ export const customerToAddReducer = createReducer(
     const newState: Customer = { ...state, contactMedium: action };
     //console.log('newstate:', newState);
     return newState;
+  }),
+
+  on(removeBillingAccountAddressInfo, (state, action) => {
+    //read-only
+    let newAddresses: any = [];
+    if (state.billingAccounts) {
+      newAddresses = state.billingAccounts.forEach((c) =>
+        c.addresses.filter((adr) => {
+          return adr.id != action.id;
+        })
+      );
+
+      const newState: Customer = {
+        ...state,
+        billingAccounts: [...state.billingAccounts, ...newAddresses],
+      };
+      return newState;
+    }
+    return state;
+  }),
+
+  on(updateBillingAccountAddressInfo, (state, action) => {
+    let addressIndex: number | undefined;
+    state.billingAccounts?.forEach((bill) => {
+      addressIndex = bill.addresses.findIndex((adr) => {
+        return adr.id === action.id;
+      });
+    });
+
+    let newAddreses: any = [];
+    let newA = state.billingAccounts?.find((b) => {
+      b.addresses.find((a) => {
+        a.id == action.id;
+      });
+    });
+    if (addressIndex != undefined && state.billingAccounts) {
+      newAddreses = [...state.billingAccounts, newA];
+      newAddreses[addressIndex] = { ...action };
+      const newState: Customer = {
+        ...state,
+        billingAccounts: [...state.billingAccounts, ...newAddreses],
+      };
+      return newState;
+    }
+
+    return state;
   })
 );

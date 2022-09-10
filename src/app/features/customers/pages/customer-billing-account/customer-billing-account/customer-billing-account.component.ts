@@ -43,10 +43,10 @@ export class CustomerBillingAccountComponent implements OnInit {
     this.getCityList();
     this.getMainAddress();
     this.messageService.clearObserver.subscribe((data) => {
-      if (data == 'r') {
+      if (data == 'reject') {
         this.messageService.clear();
-      } else if (data == 'c') {
-        this.removeAddress();
+      } else if (data == 'confirm') {
+        this.remove();
       }
     });
   }
@@ -109,7 +109,6 @@ export class CustomerBillingAccountComponent implements OnInit {
       isMain: false,
     };
     this.billingAdress.push(addressToAdd);
-    //console.log(this.billingAdress);
     this.isShown = false;
     this.newAddress = [...this.billingAdress, this.addresses];
   }
@@ -166,16 +165,18 @@ export class CustomerBillingAccountComponent implements OnInit {
 
   selectAddressId(addressId: number) {
     this.router.navigateByUrl(
-      `/dashboard/customers/${this.selectedCustomerId}/address/update/${addressId}`
+      `/dashboard/customers/${this.selectedCustomerId}/bill-address/update/${addressId}`
     );
   }
 
   removePopup(address: Address) {
-    if (this.customer.addresses && this.customer.addresses?.length <= 1) {
-      this.displayBasic = true;
-      return;
-    }
-    this.addressToDelete = address;
+    // if (this.billingAdress && this.billingAdress?.length <= 1) {
+    //   this.displayBasic = true;
+    //   return;
+    // }
+    this.addressToDelete = this.newAddress.find((adr) => {
+      return adr.id == address.id;
+    }) as Address;
     this.messageService.add({
       key: 'c',
       sticky: true,
@@ -184,12 +185,16 @@ export class CustomerBillingAccountComponent implements OnInit {
     });
   }
 
-  removeAddress() {
-    this.customerService
-      .deleteAddress(this.customer, this.addressToDelete)
-      .subscribe((data) => {
-        this.getCustomerById();
-        //location.reload();
-      });
+  // removeAddress() {
+  //   this.customerService
+  //     .deleteBillingAccountAddress(this.customer, this.addressToDelete)
+  //     .subscribe((data) => {
+  //       this.getCustomerById();
+  //       //location.reload();
+  //     });
+  // }
+
+  remove() {
+    this.customerService.removeBillingAccountAddressInfo(this.addressToDelete);
   }
 }

@@ -1,5 +1,5 @@
+import { MessageService } from 'primeng/api';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Product } from './../../models/product';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BillingAccount } from '../../models/billingAccount';
@@ -14,12 +14,12 @@ export class CustomerBillingAccountDetailComponent implements OnInit {
   billingAccountList!: BillingAccount[];
   searchForm!: FormGroup;
   filteredData!: BillingAccount[];
-  displayBasic!: boolean;
 
   constructor(
     private customerService: CustomersService,
     private activatedRoute: ActivatedRoute,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -50,7 +50,13 @@ export class CustomerBillingAccountDetailComponent implements OnInit {
       (item) => item.accountNumber == this.searchForm.value.accountNumber
     );
     if (this.filteredData.length == 0) {
-      this.displayBasic = true;
+      this.messageService.clear();
+      this.messageService.add({
+        key: 'message',
+        severity: 'warn',
+        detail: ' No account found for this number',
+      });
+      return;
     }
   }
   isValid(event: any): boolean {

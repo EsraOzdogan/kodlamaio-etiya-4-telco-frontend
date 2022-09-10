@@ -1,3 +1,4 @@
+import { Product } from 'src/app/features/customers/models/product';
 import { MessageService } from 'primeng/api';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -14,6 +15,7 @@ export class CustomerInfoComponent implements OnInit {
   customerToDelete!: Customer;
   displayBasic!: boolean;
   finder: Object[] = [];
+  activeProduct!: Product[];
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -29,12 +31,6 @@ export class CustomerInfoComponent implements OnInit {
         this.messageService.clear();
       } else if (data == 'confirm') {
         this.messageService.clear();
-        this.messageService.add({
-          key: 'message',
-          severity: 'warn',
-          detail:
-            ' Customer cannot be deleted because the customer has active products',
-        });
 
         this.remove();
       }
@@ -74,15 +70,16 @@ export class CustomerInfoComponent implements OnInit {
     this.customerToDelete.billingAccounts?.forEach((bill) => {
       bill.orders.forEach((ord) => {
         ord.offers?.forEach((ofr) => {
-          let object = ofr.products.filter((pro) => {
+          this.activeProduct = ofr.products.filter((pro) => {
             return pro.status == 'active';
           });
-          if (object.length != 0) this.finder.push(object);
+          console.warn(this.activeProduct);
+          if (this.activeProduct.length != 0)
+            this.finder.push(this.activeProduct);
         });
       });
     });
 
-    console.log(this.finder);
     if (this.finder.length == 0) {
       if (this.customerToDelete.id)
         this.customerService
@@ -91,6 +88,12 @@ export class CustomerInfoComponent implements OnInit {
             this.router.navigateByUrl(`/dashboard`);
           });
     } else {
+      this.messageService.add({
+        key: 'message',
+        severity: 'warn',
+        detail:
+          ' Customer cannot be deleted because the customer has active products',
+      });
       return;
     }
   }

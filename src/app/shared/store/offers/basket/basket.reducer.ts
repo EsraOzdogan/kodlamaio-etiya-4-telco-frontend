@@ -16,7 +16,7 @@ export const basketReducer = createReducer(
   on(addOfferToBasket, (state, action) => {
     return [...state, action.offer];
   }),
-  on(clearBasket, () => {
+  on(clearBasket, (state) => {
     return [];
   }),
   on(changeConfigOfProductInBasket, (state, action) => {

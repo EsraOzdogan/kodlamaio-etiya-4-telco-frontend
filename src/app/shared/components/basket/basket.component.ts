@@ -22,8 +22,7 @@ export class BasketComponent implements OnInit {
   getBasket() {
     this.offerService.basket$.subscribe((data) => {
       //this.basket = data;
-      //console.warn(this.basket);
-
+  
       this.selectedCatalogOfferList = data.filter((offer) => {
         return offer.type.typeName == 'catalog';
       });
@@ -37,50 +36,29 @@ export class BasketComponent implements OnInit {
           (offer) => offer.type.typeName === 'campaign'
         );
 
-        //console.log('bbbbbbb', this.campaignOffersList);
-        //console.log('selected', this.selectedCampaignOffersList);
-
         this.campaignOffersList.forEach((campaign) => {
           this.selectedCampaignOffersList.forEach((selectedCampaign) => {
             if (campaign.type.id === selectedCampaign.type.id) {
-              //console.warn('match', campaign);
-              this.matchCampaignList.push(campaign);
+             // this.matchCampaignList.push(campaign);
+              this.basket.push(campaign)
             } else {
-              //console.warn('notmatch', campaign);
             }
           });
-          //console.warn('aaaaaaa', this.matchCampaignList);
         });
-        //this.basket = this.selectedCatalogOfferList;
-
-        //this.matchCampaignList.push(this.findMatch);
-        //console.warn(this.matchCampaignList);
-
-        // this.campaignOffersList = data.filter(
-        //   (offer) => offer.type.typeName === 'campaign'
-        // );
+        
       });
 
-      // this.matchCampaignList.forEach((campaign) => {
-      //   console.log('aaaaassssssaaaa', campaign);
-      //   //this.selectedCatalogOfferList.push(campaign);
-      // });
-      //console.log('basket', this.selectedCatalogOfferList);
-
-      //console.log('catalog', this.selectedCatalogOfferList);
-      console.log('matchArray', this.matchCampaignList);
-      console.log('catalog', this.selectedCatalogOfferList);
-
-      // this.matchCampaignList.forEach((campaign) => {
-      //   this.basket.push(campaign);
-      // });
-      // this.selectedCatalogOfferList.forEach((catalog) => {
-      //   this.basket.push(catalog);
-      // });
-      console.log('basket', this.basket);
+      // console.log('matchArray', this.matchCampaignList);
+      // console.log('catalog', this.selectedCatalogOfferList);
+      
+      this.selectedCatalogOfferList.forEach((catalog) => {
+        this.basket.push(catalog);
+      });
+      //console.log('basket', this.basket);
     });
-    //console.warn('matchArrayaaaaa', this.matchCampaignList);
+
   }
+
   get amount(): number {
     let sumAmount: number = 0;
     if (this.basket === undefined) return sumAmount;
@@ -93,6 +71,7 @@ export class BasketComponent implements OnInit {
     return sumAmount;
   }
   clear() {
+    this.basket = [];
     this.offerService.clearBasketInStore();
   }
 }

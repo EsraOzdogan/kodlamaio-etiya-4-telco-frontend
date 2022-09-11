@@ -14,6 +14,8 @@ export class ListAddressInfoComponent implements OnInit {
   customer!: Customer;
   addressToDelete!: Address;
   isChecked!: boolean;
+  findAddress!: Address;
+  address!: Address[];
   constructor(
     private customersService: CustomersService,
     private router: Router,
@@ -59,17 +61,27 @@ export class ListAddressInfoComponent implements OnInit {
     this.customersService.removeAdress(this.addressToDelete);
   }
   handleConfigInput(event: any) {
-    console.warn(event.isTrusted);
-    this.customer.addresses = this.customer.addresses?.map((adr) => {
-      const newAddress = { ...adr, isPrimary: false };
-      return newAddress;
+    this.customer.addresses?.forEach((adr) => {
+      adr.isPrimary = false;
     });
-    let findAddress = this.customer.addresses?.find((adr) => {
-      return adr.id == event.target.value;
-    }) as Address;
-    findAddress!.isPrimary = true;
+    //console.log(this.customer.addresses);
+    const addressIndex = this.address?.findIndex(
+      (address) => address.id === event.target.value
+    ) as number;
+
+    // this.findAddress = this.address?.find((adr) => {
+    //   return adr.id == event.target.value;
+    // }) as Address;
+    this.customer.addresses![addressIndex].isPrimary = true;
+    //this.findAddress!.isPrimary = true;
     this.isChecked = true;
 
-    this.customersService.updateAddressInfoToStore(findAddress);
+    this.address.forEach((adr) => {
+      const address = { ...adr };
+      this.customer.addresses?.push(address);
+    });
+
+    console.warn(this.customer.addresses);
+    this.customersService.updateAddressInfoToStore(this.findAddress);
   }
 }

@@ -50,7 +50,6 @@
                           (change)="handleConfigInput($event)"
                           value="{{ address.id }}"
                           [checked]="
-                            address.isPrimary == true &&
                             this.customer.addresses &&
                             this.customer.addresses.length <= 1
                           "

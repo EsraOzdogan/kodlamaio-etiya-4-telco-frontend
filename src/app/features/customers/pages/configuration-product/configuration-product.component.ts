@@ -1,3 +1,6 @@
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { CityService } from './../../../city/services/city/city.service';
+import { City } from './../../models/city';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
@@ -23,17 +26,33 @@ export class ConfigurationProductComponent implements OnInit {
   customer!: Customer;
   billingAccountList!: BillingAccount[];
   billingAdress: Address[] = [];
+  isShown: boolean = false;
+  cityList!: City[];
+  addressForm!: FormGroup;
 
   constructor(
     private offerService: OfferService,
     private activatedRoute: ActivatedRoute,
     private customersService: CustomersService,
-    private orderService: OrderService
+    private orderService: OrderService,
+    private cityService: CityService,
+    private formBuilder: FormBuilder
   ) {}
 
   ngOnInit(): void {
     this.getParams();
     this.listenBasket();
+    this.getCityList();
+    this.createAddressForm();
+  }
+  createAddressForm() {
+    this.addressForm = this.formBuilder.group({
+      id: [Math.floor(Math.random() * 1000)],
+      city: ['', Validators.required],
+      street: ['', Validators.required],
+      flatNumber: ['', Validators.required],
+      description: ['', Validators.required],
+    });
   }
 
   listenBasket() {
@@ -116,6 +135,7 @@ export class ConfigurationProductComponent implements OnInit {
       )
     );
   }
+
   getAddressInfo(address: Address) {
     this.orderService.addAddressToOrderStore(address);
   }
@@ -138,5 +158,28 @@ export class ConfigurationProductComponent implements OnInit {
     this.customersService.update(this.customer).subscribe((data) => {
       this.getCustomerById();
     });
+  }
+  addNewAddressBtn() {
+    this.isShown = true;
+    this.createAddressForm();
+  }
+  getCityList() {
+    this.cityService.getList().subscribe((data) => {
+      this.cityList = data;
+    });
+  }
+  addAddress() {
+    if (this.addressForm.valid) {
+      const addressToAdd: Address = {
+        ...this.addressForm.value,
+        city: this.cityList.find(
+          (city) => city.id == this.addressForm.value.city
+        ),
+      };
+      this.billingAdress.push(addressToAdd);
+      console.log(addressToAdd);
+      this.isShown = false;
+    } else {
+    }
   }
 }

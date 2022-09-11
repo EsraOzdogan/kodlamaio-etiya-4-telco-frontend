@@ -31,7 +31,7 @@ export class TableAccordionComponent implements OnInit {
         this.messageService.clear();
       } else if (data == 'confirm') {
         this.customer.billingAccounts?.forEach((bill) => {
-          bill.orders.forEach((ord) => {
+          bill.orders?.forEach((ord) => {
             ord.offers?.forEach((ofr) => {
               this.activeProduct = ofr.products.filter((pro) => {
                 return pro.status == 'active';

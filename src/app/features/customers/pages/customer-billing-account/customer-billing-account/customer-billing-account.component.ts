@@ -25,7 +25,6 @@ export class CustomerBillingAccountComponent implements OnInit {
   addresses!: Address;
   primaryAddres!: number;
   newAddress!: Address[];
-  displayBasic!: boolean;
   addressToDelete!: Address;
   findToAddress!: Address;
   addressToUpdate!: any;
@@ -101,9 +100,15 @@ export class CustomerBillingAccountComponent implements OnInit {
   selectAddressId(addressId: number) {
     this.isShown = true;
     this.selectedAddressId = addressId;
-    this.addressToUpdate = this.billingAdress.find(
-      (bill) => bill.id == addressId
-    );
+    if (!this.newAddress) {
+      // if (this.addresses.id === addressId)
+      this.addressToUpdate = this.addresses;
+    } else {
+      this.addressToUpdate = this.newAddress.find(
+        (bill) => bill.id == addressId
+      );
+    }
+
     console.warn(this.addressToUpdate);
     this.createAddressForm();
   }
@@ -132,11 +137,23 @@ export class CustomerBillingAccountComponent implements OnInit {
     };
     this.billingAdress.push(addressToAdd);
     this.isShown = false;
-    this.newAddress = [...this.billingAdress, this.addresses];
+    if (!this.newAddress) {
+      this.newAddress = [this.addresses, ...this.billingAdress];
+    } else {
+      if (this.newAddress.includes(this.addresses)) {
+        this.newAddress = [this.addresses, ...this.billingAdress];
+      } else {
+        this.newAddress = [...this.billingAdress];
+      }
+    }
+
     console.warn(this.newAddress);
   }
   updateAddress() {
-    const addressIndex = this.billingAdress.findIndex((b) => {
+    if (!this.newAddress) {
+      this.newAddress = [this.addresses];
+    }
+    const addressIndex = this.newAddress.findIndex((b) => {
       return b.id == this.addressToUpdate.id;
     });
 
@@ -150,11 +167,11 @@ export class CustomerBillingAccountComponent implements OnInit {
     };
 
     console.warn(this.addressForm.value);
-    this.billingAdress![addressIndex] = addressToUpdate;
+    this.newAddress![addressIndex] = addressToUpdate;
     this.isShown = false;
   }
   getSelectedisPrimary() {
-    let selectedAddress = this.billingAdress.find(
+    let selectedAddress = this.newAddress.find(
       (address) => address.id == this.selectedAddressId
     );
     return selectedAddress?.isPrimary;
@@ -178,7 +195,10 @@ export class CustomerBillingAccountComponent implements OnInit {
       .getCustomerById(this.selectedCustomerId)
       .subscribe((data) => {
         data.addresses?.forEach((adr) => {
-          if (adr.isPrimary == true) this.addresses = adr;
+          if (adr.isPrimary == true) {
+            this.addresses = adr;
+            this.primaryAddres = adr.id;
+          }
         });
       });
   }
@@ -193,7 +213,7 @@ export class CustomerBillingAccountComponent implements OnInit {
       return adr.id == event.target.value;
     });
 
-    if (this.addresses === findAddressBill) {
+    if (this.addresses.id === findAddressBill?.id) {
       this.addresses.isPrimary = true;
     } else {
       this.addresses.isPrimary = false;
@@ -209,10 +229,20 @@ export class CustomerBillingAccountComponent implements OnInit {
   }
 
   removePopup(address: Address) {
-    // if (this.billingAdress && this.billingAdress?.length <= 1) {
-    //   this.displayBasic = true;
-    //   return;
-    // }
+    if (this.billingAdress && this.billingAdress?.length < 1) {
+      this.messageService.clear();
+      this.messageService.add({
+        key: 'message',
+        severity: 'warn',
+        detail:
+          'The address cannot be deleted because the customer only has one address',
+      });
+      return;
+      return;
+    }
+    if (!this.newAddress) {
+      this.newAddress = [this.addresses];
+    }
     this.addressToDelete = this.newAddress.find((adr) => {
       return adr.id == address.id;
     }) as Address;
@@ -224,6 +254,12 @@ export class CustomerBillingAccountComponent implements OnInit {
     });
   }
   remove() {
+    // if (!this.newAddress) {
+    //   this.newAddress = [this.addresses];
+    // }
+    this.newAddress = this.newAddress.filter(
+      (b) => b.id != this.addressToDelete.id
+    );
     this.billingAdress = this.billingAdress.filter(
       (b) => b.id != this.addressToDelete.id
     );

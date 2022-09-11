@@ -115,17 +115,17 @@
                       <button
                         (click)="selectAddressId(addresses.id)"
                         etiyaButton="edit"
+                        [disabled]="!billingAdress || billingAdress.length == 0"
                       ></button>
                       <button
                         (click)="removePopup(addresses)"
                         etiyaButton="remove"
-                        [disabled]="addresses.isPrimary"
                       ></button>
                     </td>
                   </tr>
 
                   <ng-template #customerAddressList>
-                    <tr>
+                    <!-- <tr>
                       <th>
                         <div class="row">
                           <div class="col-2 d-flex justify-content-end">
@@ -166,9 +166,9 @@
                           [disabled]="addresses.isPrimary"
                         ></button>
                       </td>
-                    </tr>
+                    </tr> -->
 
-                    <tr *ngFor="let billingadr of billingAdress">
+                    <tr *ngFor="let billingadr of newAddress">
                       <th>
                         <div class="row">
                           <div class="col-2 d-flex justify-content-end">
@@ -179,11 +179,7 @@
                               id="flexRadioDefault1"
                               (change)="handleConfigInput($event)"
                               value="{{ billingadr.id }}"
-                              [disabled]="
-                                billingadr.isPrimary == true &&
-                                this.customer.addresses &&
-                                this.customer.addresses.length <= 1
-                              "
+                              [checked]="primaryAddres == billingadr.id"
                             />
                             <label
                               class="form-check-label"
@@ -205,9 +201,9 @@
                           etiyaButton="edit"
                         ></button>
                         <button
+                          [disabled]="billingadr.isPrimary"
                           (click)="removePopup(billingadr)"
                           etiyaButton="remove"
-                          [disabled]="billingadr.isPrimary"
                         ></button>
                       </td>
                     </tr>

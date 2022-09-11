@@ -1,3 +1,4 @@
+import { LoginGuard } from './../../core/auth/guards/login.guard';
 import { UpdateCustomerBillingAccountComponent } from './pages/update-customer-billing-account/update-customer-billing-account.component';
 import { CustomerInfoComponent } from './pages/customer-info/customer-info.component';
 import { CustomerAddressComponent } from './pages/customer-address/customer-address.component';
@@ -22,7 +23,11 @@ import { AddCustomerAddressComponent } from './pages/add-customer-address/add-cu
 const routes: Routes = [
   // dashboard/customers/:id/address/update/:addressId
   { path: 'customer-info/:id', component: CustomerInfoComponent },
-  { path: 'customer-dashboard', component: CustomerDashboardComponent },
+  {
+    path: 'customer-dashboard',
+    component: CustomerDashboardComponent,
+    //canActivate: [LoginGuard],
+  },
   { path: 'contact-medium', component: AddContactMediumComponent },
   { path: 'create-customer', component: CreateCustomerComponent },
   { path: 'add-address-info', component: AddAddressInfoComponent },

@@ -1,3 +1,4 @@
+import { LoginGuard } from './core/auth/guards/login.guard';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CustomerDashboardComponent } from './features/customers/pages/customer-dashboard/customer-dashboard.component';
@@ -9,7 +10,12 @@ const routes: Routes = [
   {
     path: 'dashboard',
     children: [
-      { path: '', component: CustomerDashboardComponent, pathMatch: 'full' },
+      {
+        path: '',
+        component: CustomerDashboardComponent,
+        pathMatch: 'full',
+        //canActivate: [LoginGuard],
+      },
       {
         path: 'customers',
         loadChildren: () =>

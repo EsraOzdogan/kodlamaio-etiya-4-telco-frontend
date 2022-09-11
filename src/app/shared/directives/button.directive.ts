@@ -22,7 +22,8 @@ export class ButtonDirective implements OnInit {
     | 'new-address'
     | 'edit'
     | 'remove'
-    | 'accordion-body';
+    | 'accordion-body'
+    | 'accordion-body-disabled';
 
   constructor(private renderer: Renderer2, private hostElement: ElementRef) {}
 

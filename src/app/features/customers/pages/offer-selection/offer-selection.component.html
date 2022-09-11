@@ -26,9 +26,9 @@
                     </option>
                   </select>
                 </div>
-                <div class="row">
+                <div class="row align-items-center">
                   <div class="col-12 col-xl-6">
-                    <div class="row m-2 e-offer-selection-center">
+                    <div class="row p-2 e-offer-selection-center">
                       <div class="col-12 col-lg-5 p-0">
                         <label class="e-offer-label" for="prodOfferId"
                           >Prod Offer ID
@@ -47,7 +47,7 @@
                     </div>
                   </div>
                   <div class="col-12 col-xl-6">
-                    <div class="row e-offer-selection-center">
+                    <div class="row p-2 e-offer-selection-center">
                       <div class="col-12 col-lg-5 p-0">
                         <label class="e-offer-label" for="prodOfferName"
                           >Prod Offer Name
@@ -78,8 +78,8 @@
                 <app-table-scroll class="e-table">
                   <thead>
                     <tr class="table-title">
-                      <th>Prod Offer ID</th>
-                      <th>Prod Offer Name</th>
+                      <th class="col-6">Prod Offer ID</th>
+                      <th class="col-6">Prod Offer Name</th>
                     </tr>
                   </thead>
                   <tbody class="table-body">
@@ -88,8 +88,8 @@
                       (click)="addBasket(catalogOffer)"
                       [ngClass]="{ selected: isSelected(catalogOffer) }"
                     >
-                      <td>{{ catalogOffer.id }}</td>
-                      <td>
+                      <td class="col-2">{{ catalogOffer.id }}</td>
+                      <td class="col-2">
                         <span *ngIf="isSelected(catalogOffer)"
                           >{{ getOfferCount(catalogOffer) }}x</span
                         >
@@ -112,9 +112,9 @@
                     </option>
                   </select>
                 </div>
-                <div class="row">
+                <div class="row align-items-center">
                   <div class="col-12 col-xl-6">
-                    <div class="row m-2 e-offer-selection-center">
+                    <div class="row p-2 e-offer-selection-center">
                       <div class="col-12 col-lg-5 p-0">
                         <label class="e-offer-label" for="prodOfferId"
                           >Campaign ID
@@ -133,7 +133,7 @@
                     </div>
                   </div>
                   <div class="col-12 col-xl-6">
-                    <div class="row e-offer-selection-center">
+                    <div class="row p-2 e-offer-selection-center">
                       <div class="col-12 col-lg-5 p-0">
                         <label class="e-offer-label" for="prodOfferName"
                           >Campaign Name
@@ -164,8 +164,8 @@
                 <app-table-scroll class="e-table">
                   <thead>
                     <tr class="table-title">
-                      <th>Campaign ID</th>
-                      <th>Prod Offer ID</th>
+                      <th class="col-2">Campaign ID</th>
+                      <th class="col-3">Prod Offer ID</th>
                       <th>Prod Offer Name</th>
                     </tr>
                   </thead>
@@ -175,8 +175,8 @@
                       (click)="addBasket(campaignOffer)"
                       [ngClass]="{ selected: isSelected(campaignOffer) }"
                     >
-                      <td>{{ campaignOffer.type.id }}</td>
-                      <td>{{ campaignOffer.id }}</td>
+                      <td class="col-2">{{ campaignOffer.type.id }}</td>
+                      <td class="col-3">{{ campaignOffer.id }}</td>
                       <td>
                         <span *ngIf="isSelected(campaignOffer)"
                           >{{ getOfferCount(campaignOffer) }}x</span
@@ -222,6 +222,7 @@
               '/configuration-product/' +
               billingAccountId
             "
+            [disabled]="this.offerList.length==0"
           >
             NEXT
           </button>

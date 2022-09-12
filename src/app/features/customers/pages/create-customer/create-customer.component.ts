@@ -62,9 +62,9 @@ export class CreateCustomerComponent implements OnInit {
         this.messageService.add({
           detail: 'This user already exist',
           severity: 'info',
-          summary: 'Warning',
+          summary: 'Warning Message',
           key: 'etiya-custom',
-          sticky: true,
+          sticky: false,
         });
       } else {
         this.customerService.setDemographicInfoToStore(this.profileForm.value);

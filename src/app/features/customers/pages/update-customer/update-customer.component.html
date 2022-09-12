@@ -138,7 +138,9 @@
               <div class="col-6 d-flex justify-content-lg-start">
                 <button
                   etiyaButton="clear"
-                  routerLink="/dashboard/customers/customer-info"
+                  [routerLink]="
+                    '/dashboard/customers/customer-info/' + selectedCustomerId
+                  "
                 >
                   CANCEL
                 </button>

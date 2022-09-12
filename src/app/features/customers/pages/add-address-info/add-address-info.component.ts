@@ -71,7 +71,8 @@ export class AddAddressInfoComponent implements OnInit {
         city: this.cityList.find(
           (city) => city.id == this.addressForm.value.city
         ),
-        isPrimary: true,
+        isPrimary:
+          this.customer.addresses?.find((c) => c.isPrimary) == undefined,
       };
       this.isShow = false;
       this.customersService.addAddressInfoToStore(addressToAdd, this.customer);

@@ -35,6 +35,7 @@ import { TableAccordionHeaderComponent } from './components/table-accordion-head
 import { StoreModule } from '@ngrx/store';
 import { sharedReducers } from './store/shared.reducers';
 import { MessageDialogComponent } from './components/message-dialog/message-dialog.component';
+import { ProductDetailPopupComponent } from './components/product-detail-popup/product-detail-popup.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import { MessageDialogComponent } from './components/message-dialog/message-dial
     TableScrollComponent,
     TableAccordionHeaderComponent,
     MessageDialogComponent,
+    ProductDetailPopupComponent,
   ],
   imports: [
     CommonModule,
@@ -101,6 +103,7 @@ import { MessageDialogComponent } from './components/message-dialog/message-dial
     TableScrollComponent,
     TableAccordionHeaderComponent,
     MessageDialogComponent,
+    ProductDetailPopupComponent,
   ],
   providers: [MessageService],
 })

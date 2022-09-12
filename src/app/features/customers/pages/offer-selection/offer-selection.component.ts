@@ -24,6 +24,7 @@ export class OfferSelectionComponent implements OnInit {
   selectedCustomerId!: number;
   billingAccountId!: number;
   basket!: Offer[];
+  itemsInBasket: boolean = false;
 
   constructor(
     private offerService: OfferService,
@@ -34,6 +35,9 @@ export class OfferSelectionComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.offerService.basket$.subscribe((data) => {
+      this.itemsInBasket = data.length > 0;
+    });
     this.getParams();
     this.getOfferList();
     this.listenBasket();

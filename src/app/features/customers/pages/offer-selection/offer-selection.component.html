@@ -196,13 +196,15 @@
       </div>
       <div class="row e-buttons">
         <div class="col-8 d-flex justify-content-end align-items-center">
-          <button *ngIf="this.offerList.length==0;"
+          <button
+            *ngIf="this.offerList.length == 0"
             etiyaButton="accordion-body-disabled"
             (click)="saveBasket()"
           >
             Add Basket
           </button>
-          <button *ngIf="this.offerList.length!=0"
+          <button
+            *ngIf="this.offerList.length != 0"
             etiyaButton="accordion-body"
             (click)="saveBasket()"
           >
@@ -227,7 +229,7 @@
               '/configuration-product/' +
               billingAccountId
             "
-            [disabled]="this.offerList.length==0"
+            [disabled]="!itemsInBasket"
           >
             NEXT
           </button>

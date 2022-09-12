@@ -201,7 +201,7 @@
                           etiyaButton="edit"
                         ></button>
                         <button
-                          [disabled]="billingadr.isPrimary"
+                          [disabled]="primaryAddres == billingadr.id"
                           (click)="removePopup(billingadr)"
                           etiyaButton="remove"
                         ></button>

@@ -66,6 +66,14 @@ export class CustomerBillingAccountComponent implements OnInit {
         .getCustomerById(this.selectedCustomerId)
         .subscribe((data) => {
           this.customer = data;
+          if (data.addresses) {
+            this.newAddress = data.addresses.filter(
+              (c) => c.isPrimary === true
+            );
+            this.billingAdress = data.addresses.filter(
+              (c) => c.isPrimary === true
+            );
+          }
           this.createAddressForm();
           this.createAccountForm();
         });
@@ -94,6 +102,8 @@ export class CustomerBillingAccountComponent implements OnInit {
 
   addNewAddressBtn() {
     this.isShown = true;
+    this.addressToUpdate = undefined;
+    this.selectedAddressId = -1;
     this.createAddressForm();
   }
 
@@ -120,7 +130,7 @@ export class CustomerBillingAccountComponent implements OnInit {
   }
 
   saveAddress() {
-    if (this.selectedAddressId) {
+    if (this.selectedAddressId && this.selectedAddressId > 0) {
       this.updateAddress();
     } else {
       this.addAddress();
@@ -229,7 +239,16 @@ export class CustomerBillingAccountComponent implements OnInit {
   }
 
   removePopup(address: Address) {
-    if (this.billingAdress && this.billingAdress?.length < 1) {
+    if (this.primaryAddres == address.id) {
+      this.messageService.clear();
+      this.messageService.add({
+        key: 'message',
+        severity: 'warn',
+        detail: 'The address cannot be deleted because it is main address.',
+      });
+      return;
+    }
+    if (this.newAddress && this.newAddress.length <= 1) {
       this.messageService.clear();
       this.messageService.add({
         key: 'message',
@@ -237,7 +256,6 @@ export class CustomerBillingAccountComponent implements OnInit {
         detail:
           'The address cannot be deleted because the customer only has one address',
       });
-      return;
       return;
     }
     if (!this.newAddress) {

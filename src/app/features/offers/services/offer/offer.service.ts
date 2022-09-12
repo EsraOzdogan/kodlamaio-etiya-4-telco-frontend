@@ -7,6 +7,7 @@ import { ProductConfigDto } from 'src/app/features/products/models/productConfig
 import { environment } from 'src/environments/environment';
 import { Offer } from '../../models/offer';
 import {
+  addAllOfferToBasket,
   addOfferToBasket,
   changeConfigOfProductInBasket,
   clearBasket,
@@ -31,6 +32,9 @@ export class OfferService {
 
   addOfferToBasketStore(offer: Offer) {
     this.store.dispatch(addOfferToBasket({ offer }));
+  }
+  addAllOfferToBasketStore(offers: Offer[]) {
+    this.store.dispatch(addAllOfferToBasket({ offers }));
   }
   clearBasketInStore() {
     this.store.dispatch(clearBasket());

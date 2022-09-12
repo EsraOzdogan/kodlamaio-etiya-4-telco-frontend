@@ -8,6 +8,10 @@ export const addOfferToBasket = createAction(
   '[Basket] Add Offer To Basket',
   props<{ offer: Offer }>()
 );
+export const addAllOfferToBasket = createAction(
+  '[Basket] Add All Offer To Basket',
+  props<{ offers: Offer[] }>()
+);
 
 export const clearBasket = createAction('[Basket] Clear Basket');
 export const changeConfigOfProductInBasket = createAction(

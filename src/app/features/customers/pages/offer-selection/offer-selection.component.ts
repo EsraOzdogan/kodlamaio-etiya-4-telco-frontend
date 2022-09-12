@@ -23,6 +23,7 @@ export class OfferSelectionComponent implements OnInit {
   searchCatalogForm!: FormGroup;
   selectedCustomerId!: number;
   billingAccountId!: number;
+  basket!: Offer[];
 
   constructor(
     private offerService: OfferService,
@@ -65,10 +66,14 @@ export class OfferSelectionComponent implements OnInit {
     this.offerList.push(offer);
   }
   saveBasket() {
-    this.offerList.forEach((offer) => {
-      this.offerService.addOfferToBasketStore(offer);
-    });
+    // const selectedOffers:Offer[]=[...this.offerList]
+    // this.offerService.clearBasketInStore();
+    const offersToAdd = this.offerList.slice(
+      this.basket.length === 0 ? 0 : this.basket.length
+    );
+    this.offerService.addAllOfferToBasketStore(offersToAdd);
   }
+
   isSelected(offer: Offer): boolean {
     if (this.offerList === undefined) return false;
     return Boolean(
@@ -85,8 +90,9 @@ export class OfferSelectionComponent implements OnInit {
   listenBasket() {
     this.offerService.basket$.subscribe((basket) => {
       if (basket === undefined) return;
-      this.offerList = [...basket];
-      console.log(basket);
+      // this.offerList = [...basket];
+      if (basket.length == 0) this.offerList = [];
+      this.basket = [...basket];
     });
   }
 
@@ -134,7 +140,6 @@ export class OfferSelectionComponent implements OnInit {
       });
   }
   isValid(event: any): boolean {
-    console.log(event);
     const pattern = /[0-9]/;
     const char = String.fromCharCode(event.which ? event.which : event.keyCode);
     if (pattern.test(char)) return true;

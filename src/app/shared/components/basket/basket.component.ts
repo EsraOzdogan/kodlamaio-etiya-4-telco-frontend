@@ -21,8 +21,9 @@ export class BasketComponent implements OnInit {
   }
   getBasket() {
     this.offerService.basket$.subscribe((data) => {
-      //this.basket = data;
-  
+      this.basket = [];
+      // this.basket = data;
+
       this.selectedCatalogOfferList = data.filter((offer) => {
         return offer.type.typeName == 'catalog';
       });
@@ -36,27 +37,19 @@ export class BasketComponent implements OnInit {
           (offer) => offer.type.typeName === 'campaign'
         );
 
-        this.campaignOffersList.forEach((campaign) => {
-          this.selectedCampaignOffersList.forEach((selectedCampaign) => {
-            if (campaign.type.id === selectedCampaign.type.id) {
-             // this.matchCampaignList.push(campaign);
-              this.basket.push(campaign)
-            } else {
-            }
-          });
+        this.selectedCampaignOffersList.forEach((selectedCampaign, index) => {
+          const offersToAdd = this.campaignOffersList.filter(
+            (campaignOffer) => campaignOffer.type.id == selectedCampaign.type.id
+          );
+          this.basket.push(...offersToAdd);
         });
-        
       });
 
-      // console.log('matchArray', this.matchCampaignList);
-      // console.log('catalog', this.selectedCatalogOfferList);
-      
+      console.log('selectedCatalogOfferList', this.selectedCatalogOfferList);
       this.selectedCatalogOfferList.forEach((catalog) => {
         this.basket.push(catalog);
       });
-      //console.log('basket', this.basket);
     });
-
   }
 
   get amount(): number {

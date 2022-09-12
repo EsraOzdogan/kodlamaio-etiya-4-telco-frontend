@@ -2,6 +2,7 @@ import { createReducer, on } from '@ngrx/store';
 import { Product } from 'src/app/features/customers/models/product';
 import { Offer } from '../../../../features/offers/models/offer';
 import {
+  addAllOfferToBasket,
   addOfferToBasket,
   changeConfigOfProductInBasket,
   clearBasket,
@@ -15,6 +16,9 @@ export const basketReducer = createReducer(
   initialState,
   on(addOfferToBasket, (state, action) => {
     return [...state, action.offer];
+  }),
+  on(addAllOfferToBasket, (state, action) => {
+    return [...state, ...action.offers];
   }),
   on(clearBasket, (state) => {
     return [];

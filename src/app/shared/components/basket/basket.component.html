@@ -7,7 +7,7 @@
       <span class="e-line-right"></span>
     </div>
     <div class="scroll">
-      <div *ngFor="let offer of basket">
+      <div *ngFor="let offer of basket" (click)="removeOffer(offer)">
         <p>
           {{ offer.type.typeName }} ID: {{ offer.type.id }}<br />
           Prod Offer ID : {{ offer.id }}<br />
@@ -24,8 +24,12 @@
       </div>
     </div>
     <div class="row d-flex align-items-center justify-content-center">
-      <button etiyaButton="clear" class="col-3 mt-2" (click)="clear()"
-      [disabled]="basket.length==0">
+      <button
+        etiyaButton="clear"
+        class="col-3 mt-2"
+        (click)="clear()"
+        [disabled]="basket.length == 0"
+      >
         Clear
       </button>
     </div>

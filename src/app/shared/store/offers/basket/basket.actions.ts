@@ -22,3 +22,9 @@ export const changeConfigOfProductInBasket = createAction(
     config: ProductConfigDto;
   }>()
 );
+export const removeBasket = createAction(
+  '[Basket] Remove Basket',
+  props<{
+    offer: Offer;
+  }>()
+);

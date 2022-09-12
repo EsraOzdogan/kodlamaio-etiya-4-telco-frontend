@@ -1,6 +1,3 @@
-::ng-deep p{
-  color: #2a5183;
-}
 
 :host ::ng-deep .pi {
   display: none;
@@ -8,18 +5,7 @@
 :host ::ng-deep .p-toast-center {
   width: 45rem;
 }
-:host ::ng-deep .p-toast .p-toast-message.p-toast-message-warn {
-  background: #fff;
-  border: 2px solid #f58220;
-  border-radius: 0;
-  box-shadow: none;
-  font-family: 'Anybody';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 24px;
-  line-height: 25px;
-  color: #2a5183;
-}
+
 :host ::ng-deep .p-button.p-button-success,
 .p-button.p-button-success:enabled:hover,
 .p-button.p-button-secondary,

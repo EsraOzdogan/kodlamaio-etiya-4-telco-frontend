@@ -60,9 +60,9 @@ export class CreateCustomerComponent implements OnInit {
       });
       if (matchCustomer) {
         this.messageService.add({
-          detail: 'This user already exist',
+          detail: '',
           severity: 'info',
-          summary: 'Warning Message',
+          summary: 'This user already exist',
           key: 'etiya-custom',
           sticky: false,
         });
